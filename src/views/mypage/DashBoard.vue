@@ -222,6 +222,7 @@
       :totalTakenCredit="memberData.totalTakenCredit"
       :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
       :generalTakenCredit="memberData.generalTakenCredit"
+     
       >
     </ResourceAllocation>
     </div>

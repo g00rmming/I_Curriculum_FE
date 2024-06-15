@@ -73,6 +73,15 @@
   </div>
   
 
+ <!-- 성적 추이도를 나타내는 꺾은선 그래프 -->
+ <div class="col-lg-12 col-md-12">
+      <div class="border card">
+        <div class="card-header">
+          <h3 class="card-title">성적 추이도</h3>
+        </div>
+        <apexchart type="line" height="350" :options="lineChartOptions" :series="lineChartSeries"></apexchart>
+      </div>
+  </div>
 
   <RecommendComp :isVisible="modalvisable" @close="modalvisable = false" :RecommendDataList="dumyData"> </RecommendComp>
 
@@ -93,7 +102,7 @@ export default {
     generalCoreList: {}, // 핵교
     totalTakenCredit: Number, // 전공 이수학점
     generalCoreTakenCredit:Number, //핵심교양 이수학점
-    generalTakenCredit: Number //일반교양 이수학점
+    generalTakenCredit: Number, //일반교양 이수학점
   },
   data() {
     return {
@@ -122,6 +131,10 @@ export default {
       majorSeries: [], // 전공
       generalSeries: [], //교양
       generalCoreSeries: [], //핵교
+      lineChartSeries: [], // 성적 추이 그래프
+
+      gradeData: [3.2, 3.5, 3.8, 4.0], // 예시 성적 데이터
+
       //차트 옵션
       chartOptions: {
         chart: {
@@ -182,9 +195,36 @@ export default {
           }
         }
       },
+  lineChartOptions: {
+        chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: 'straight'
+        },
+        title: {
+          text: '학년별 성적 추이도',
+          align: 'left'
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // alternating row colors
+            opacity: 0.5
+          },
+        },
+        xaxis: {
+          categories: ['1학년', '2학년', '3학년', '4학년'],
+        }
+      }
     };
-  }
-  ,
+  },
   mounted() {
     this.fetchData()
   },
@@ -201,6 +241,12 @@ export default {
       
       this.generalSeries = [this.generalCoreTakenCredit,65 - this.generalCoreTakenCredit];
       this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
+      
+      this.lineChartSeries = [{
+        name: "성적",
+        data: this.gradeData
+      }];
+      console.log("Grade Data: ", this.gradeData);
     },
     openModal() {
       this.modalvisable = true;
