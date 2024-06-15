@@ -58,6 +58,7 @@
   
   <script>
 export default {
+  inject: ['$axios'],
   data() {
     return {
         loginInfo: {
@@ -71,7 +72,6 @@ export default {
   },
   methods: {
     userValidation() {
-      alert("");
       // 로그인 검증 로직 추가
       if (this.loginInfo.email && this.loginInfo.password) {
         // 예제에서는 간단히 조건을 체크하여 로그인 처리를 합니다.
@@ -85,7 +85,6 @@ export default {
     }
   },
   unmounted : function() {
-    alert("sd");
   }
 };
 </script>

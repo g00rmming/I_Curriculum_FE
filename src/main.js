@@ -25,6 +25,9 @@ const setLogoPlugin = {
   }
 };
 
+
+
+
 createApp(App)
   .use(store)
   .use(router)
@@ -34,3 +37,4 @@ createApp(App)
   .provide('$axios', httpApi) // 전역으로 axios인스턴스를 제공
   .component('apexchart', VueApexCharts)
   .mount('#app');
+  

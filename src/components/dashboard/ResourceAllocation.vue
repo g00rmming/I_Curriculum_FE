@@ -112,7 +112,11 @@ export default {
     RecommendComp: RecommendComp,
   },
   props: {
-
+    majorEssentialList: {},  //전필
+    majorSelectiveList: {}, //전선
+    generalSelectiveList: {}, //교필
+    generalCoreList: {}, // 핵교
+    generalEssentialList: {}//교선
   },
   data() {
     return {
