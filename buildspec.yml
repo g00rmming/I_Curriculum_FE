@@ -3,21 +3,21 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20 # Node.js 버전을 지정합니다.
+      nodejs: 14 # Node.js 버전 지정
     commands:
-      - npm install # NPM 종속성을 설치합니다.
+      - echo 의존성 설치 중...
+      - npm install
+
   build:
     commands:
-      - npm run build # 빌드 명령을 실행합니다.
-  post_build:
-    commands:
-      - echo Build completed on `date` # 빌드 완료 시간을 출력합니다.
+      - echo Vue.js 프로젝트 빌드 중...
+      - npm run build
 
 artifacts:
   files:
-    - '**/*' # 모든 파일을 아티팩트로 포함합니다.
-  base-directory: build # 빌드 결과물이 저장되는 디렉토리 (필요에 따라 변경)
+    - '**/*'
+  base-directory: dist # Vue.js 빌드 출력이 위치하는 디렉토리
 
 cache:
   paths:
-    - node_modules/**/* # node_modules 디렉토리를 캐시합니다.
+    - node_modules/**/*
