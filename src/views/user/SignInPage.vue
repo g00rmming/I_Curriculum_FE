@@ -91,7 +91,9 @@ export default {
 
   },
   mounted() {
-
+    
+  },
+  method : {
   },
   watch: {
 
