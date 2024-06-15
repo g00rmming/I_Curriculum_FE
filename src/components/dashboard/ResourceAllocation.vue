@@ -1,9 +1,9 @@
 <template>
   <div class="row row-cards mt-0">
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-4 col-md-12">
       <div class="border card">
         <div class="card-header">
-          <h3 class="card-title">전공 필수</h3>
+          <h3 class="card-title">전공</h3>
           <div class="card-actions btn-actions">
             <span class="recommend-text">추천과목</span>
             <a class="btn-action" @click="openModal"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
@@ -24,10 +24,10 @@
         <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-4 col-md-12">
       <div class="border card">
         <div class="card-header">
-          <h3 class="card-title">전공 선택</h3>
+          <h3 class="card-title">교양</h3>
           <div class="card-actions btn-actions">
             <span class="recommend-text">추천과목</span>
             <a href="#" class="btn-action"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
@@ -47,32 +47,7 @@
         <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
       </div>
     </div>
-  </div>
-  <div class="row row-cards mt-0">
-    <div class="col-lg-6 col-md-12">
-      <div class="border card">
-        <div class="card-header">
-          <h3 class="card-title">교양 필수</h3>
-          <div class="card-actions btn-actions">
-            <span class="recommend-text">추천과목</span>
-            <a href="#" class="btn-action"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-book">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
-                <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
-                <path d="M3 6l0 13" />
-                <path d="M12 6l0 13" />
-                <path d="M21 6l0 13" />
-              </svg>
-            </a>
-          </div>
-        </div>
-        <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
-      </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-4 col-md-12">
       <div class="border card">
         <div class="card-header">
           <h3 class="card-title">핵심 교양</h3>
@@ -96,6 +71,7 @@
       </div>
     </div>
   </div>
+  
 
 
   <RecommendComp :isVisible="modalvisable" @close="modalvisable = false" :RecommendDataList="dumyData"> </RecommendComp>
@@ -112,11 +88,9 @@ export default {
     RecommendComp: RecommendComp,
   },
   props: {
-    majorEssentialList: {},  //전필
-    majorSelectiveList: {}, //전선
-    generalSelectiveList: {}, //교필
+    majorList: {},  // 전공
+    generalList: {}, // 교양 
     generalCoreList: {}, // 핵교
-    generalEssentialList: {}//교선
   },
   data() {
     return {
@@ -142,7 +116,10 @@ export default {
       },
       modalvisable: false,// 모달 visable
       // 차트 데이터
-      series: [80, 20],
+      majorSeries: [], // 전공
+      generalSeries: [], //교양
+      generalCoreSeries: [], //핵교
+      //차트 옵션
       chartOptions: {
         chart: {
           type: 'donut',
@@ -153,7 +130,7 @@ export default {
             return val + "%"
           },
           style: {
-            fontSize: '14px',
+            fontSize: '10px',
             fontFamily: 'Helvetica, Arial, sans-serif',
             fontWeight: 'bold',
             colors: ["#FFFFFF"]
@@ -206,10 +183,14 @@ export default {
   }
   ,
   mounted() {
-    console.log("seok");
-
+    this.fetchData()
   },
   methods: {
+    fetchData(){
+      this.majorSeries
+      this.generalSeries
+      this.generalCoreSeries
+    },
     openModal() {
       this.modalvisable = true;
     },

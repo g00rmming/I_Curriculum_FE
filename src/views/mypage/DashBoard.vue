@@ -212,9 +212,8 @@
 
         </div>
       </div>
-      <!-- 비용 영역 끝-->
-      <ResourceAllocation :majorEssentialList="majorEssentialList" :majorSelectiveList="majorSelectiveList" :generalSelectiveList="generalSelectiveList"
-      :generalCoreList="generalCoreList" :generalEssentialList="generalEssentialList"></ResourceAllocation>
+      <!--  영역 끝-->
+      <ResourceAllocation :majorList="majorList" :generalList="generalList" :generalCoreList="generalCoreList"></ResourceAllocation>
     </div>
   </div>
 </template>
