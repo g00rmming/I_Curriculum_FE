@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="donut" height="350" :options="chartOptions" :series="majorSeries"></apexchart>
       </div>
     </div>
     <div class="col-lg-4 col-md-12">
@@ -44,7 +44,7 @@
             </a>
           </div>
         </div>
-        <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="donut" height="350" :options="chartOptions" :series="generalSeries"></apexchart>
       </div>
     </div>
     <div class="col-lg-4 col-md-12">
@@ -67,7 +67,7 @@
             </a>
           </div>
         </div>
-        <apexchart type="donut" height="350" :options="chartOptions" :series="series"></apexchart>
+        <apexchart type="donut" height="350" :options="chartOptions" :series="generalCoreSeries"></apexchart>
       </div>
     </div>
   </div>
@@ -187,9 +187,15 @@ export default {
   },
   methods: {
     fetchData(){
-      this.majorSeries
-      this.generalSeries
-      this.generalCoreSeries
+      console.log('Major List:', this.majorList);
+      console.log('General List:', this.generalList);
+      console.log('General Core List:', this.generalCoreList);
+      this.majorSeries = [this.majorTakenCredit || 0, (this.totalTakenCredit - this.majorTakenCredit) || 0];
+      this.generalSeries = [this.generalTakenCredit || 0, (this.totalTakenCredit - this.generalTakenCredit) || 0];
+      this.generalCoreSeries = [this.generalCoreTakenCredit || 0, (this.totalTakenCredit - this.generalCoreTakenCredit) || 0];
+      console.log('Major List:', this.majorList);
+      console.log('General List:', this.generalList);
+      console.log('General Core List:', this.generalCoreList);
     },
     openModal() {
       this.modalvisable = true;

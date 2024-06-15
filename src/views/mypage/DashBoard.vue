@@ -213,7 +213,7 @@
         </div>
       </div>
       <!--  영역 끝-->
-      <ResourceAllocation :majorList="majorList" :generalList="generalList" :generalCoreList="generalCoreList"></ResourceAllocation>
+      <ResourceAllocation :majorList="majorList" :generalList="generalList" :generalCoreList="generalCoreList" :majorSeries="majorSeries" :generalSeries="generalSeries" :generalCoreSeries="generalCoreSeries"></ResourceAllocation>
     </div>
   </div>
 </template>
@@ -254,15 +254,16 @@ export default {
         console.log(res.data.result);
         const result = res.data.result;
         this.memberData = {
-          totalTakenCredit: result.totalTakenCredit,
-          majorTakenCredit: result.majorTakenCredit, // 전공 이수학점
-          majorGrade: result.majorGrade, // 전공 학점성적
-          previousMajorGrade: result.previousMajorGrade, // 전학기까지 전공 학점성적 
-          previousTotalGrade: result.previousTotalGrade, // 전학기총 학점 성적
-          totalGrade: result.totalGrade, // 총 학점 성적
+          totalTakenCredit: result.totalTakenCredit || 0,
+          majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
+          majorGrade: result.majorGrade || 0, // 전공 학점성적
+          previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
+          previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
+          totalGrade: result.totalGrade || 0, // 총 학점 성적
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
         }
+        
         
         this.onLoading = false;
       }).catch((err) => {
