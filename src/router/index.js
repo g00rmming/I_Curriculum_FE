@@ -25,6 +25,12 @@ const userRoutes = [
     name: 'SignInpage',
     component: () => import("../views/user/SignInPage.vue"),
   },
+  {
+    path: '/createMember',
+    name: 'createMemberpage',
+    component: () => import("../views/user/createMember.vue"),
+  },
+  
 
 ]
 
