@@ -91,6 +91,9 @@ export default {
     majorList: {},  // 전공
     generalList: {}, // 교양 
     generalCoreList: {}, // 핵교
+    totalTakenCredit: Number, // 전공 이수학점
+    generalCoreTakenCredit:Number, //핵심교양 이수학점
+    generalTakenCredit: Number //일반교양 이수학점
   },
   data() {
     return {
@@ -190,12 +193,14 @@ export default {
       console.log('Major List:', this.majorList);
       console.log('General List:', this.generalList);
       console.log('General Core List:', this.generalCoreList);
-      this.majorSeries = [this.majorTakenCredit || 0, (this.totalTakenCredit - this.majorTakenCredit) || 0];
-      this.generalSeries = [this.generalTakenCredit || 0, (this.totalTakenCredit - this.generalTakenCredit) || 0];
-      this.generalCoreSeries = [this.generalCoreTakenCredit || 0, (this.totalTakenCredit - this.generalCoreTakenCredit) || 0];
-      console.log('Major List:', this.majorList);
-      console.log('General List:', this.generalList);
-      console.log('General Core List:', this.generalCoreList);
+
+      console.log("전공 이수 학점: ",this.totalTakenCredit);
+      console.log("교양 이수 학점: ",this.generalTakenCredit);
+      console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
+      this.majorSeries = [this.totalTakenCredit,65 - this.totalTakenCredit];
+      
+      this.generalSeries = [this.generalCoreTakenCredit,65 - this.generalCoreTakenCredit];
+      this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
     },
     openModal() {
       this.modalvisable = true;

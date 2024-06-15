@@ -213,7 +213,17 @@
         </div>
       </div>
       <!--  영역 끝-->
-      <ResourceAllocation :majorList="majorList" :generalList="generalList" :generalCoreList="generalCoreList" :majorSeries="majorSeries" :generalSeries="generalSeries" :generalCoreSeries="generalCoreSeries"></ResourceAllocation>
+      <ResourceAllocation :majorList="majorList" 
+      :generalList="generalList" 
+      :generalCoreList="generalCoreList" 
+      :majorSeries="majorSeries" 
+      :generalSeries="generalSeries" 
+      :generalCoreSeries="generalCoreSeries" 
+      :totalTakenCredit="memberData.totalTakenCredit"
+      :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
+      :generalTakenCredit="memberData.generalTakenCredit"
+      >
+    </ResourceAllocation>
     </div>
   </div>
 </template>
@@ -260,6 +270,8 @@ export default {
           previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
           previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
           totalGrade: result.totalGrade || 0, // 총 학점 성적
+          generalTakenCredit: result.generalTakenCredit || 0, // 교양 이수학점
+          generalCoreTakenCredit: result.generalCoreTakenCredit || 0, // 핵심교양 이수학점
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
         }
