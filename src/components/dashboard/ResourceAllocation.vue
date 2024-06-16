@@ -106,6 +106,13 @@ export default {
     generalEssentialTakenCredit: Number, // 교양 필수 이수학점
     majorTakenCredit: Number, // 전공 이수 학점 
     majorEssentialTakenCredit: Number, // 전공 필수 이수 학점
+    one: Number,
+    two: Number,
+    three: Number,
+    four: Number,
+    five: Number,
+    six: Number,
+    creative: Number,
   },
   data() {
     return {
@@ -267,8 +274,8 @@ export default {
             }
           }
         }],
-        labels: ['전공필수', '전공선택', '미이수'],
-        colors: ["#008FFB","#00E396", "#F05650"],
+        labels: ['1영역', '2영역', '3영역','4영역','5영역','6영역','창의영역'],
+        colors: ["#008FFB","#00E396","#FF5733","#FFC300","#900C3F","#DAF7A6","#6F42C1"],
         plotOptions: {
           pie: {
             donut: {
@@ -347,7 +354,7 @@ export default {
       console.log("전공 필수 이수 학점: ",this.majorEssentialTakenCredit);
       this.majorSeries = [this.majorEssentialTakenCredit, this.majorTakenCredit - this.majorEssentialTakenCredit, 65 - this.majorTakenCredit];
       this.generalSeries = [this.generalEssentialTakenCredit,this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit,this.generalCoreTakenCredit,65-this.generalEssentialTakenCredit-this.totalTakenCredit+this.majorTakenCredit];
-      this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
+      this.generalCoreSeries = [this.one,this.two,this.three,this.four,this.five,this.six,this.creative]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
       
       this.lineChartSeries = [{
         name: "성적",

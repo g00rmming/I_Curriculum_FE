@@ -224,6 +224,14 @@
       :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
       :majorEssentialTakenCredit="memberData.majorEssentialTakenCredit"
       :generalEssentialTakenCredit="memberData.generalEssentialTakenCredit"
+      :one="memberData.one"
+      :two="memberData.two"
+      :three="memberData.three"
+      :four="memberData.four"
+      :five="memberData.five"
+      :six="memberData.six"
+      :creative="memberData.creative"
+
       >
     </ResourceAllocation>
     </div>
@@ -277,6 +285,14 @@ export default {
           generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
           generalEssentialTakenCredit: result.generalEssentialDTO.takenCredit|| 0, // 교양 필수 학점
           majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0, //전공 필수 학점
+
+          one: result.generalCoreDTO.takeOne,
+          two: result.generalCoreDTO.takeTwo,
+          three: result.generalCoreDTO.takeThree,
+          four: result.generalCoreDTO.takeFour,
+          five: result.generalCoreDTO.takeFive,
+          six: result.generalCoreDTO.takeSix,
+          creative: result.generalCoreDTO.takeCreative,
 
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
