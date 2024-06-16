@@ -222,6 +222,7 @@
       :totalTakenCredit="memberData.totalTakenCredit"
       :majorTakenCredit="memberData.majorTakenCredit"
       :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
+      :majorEssentialTakenCredit="memberData.majorEssentialTakenCredit"
       >
     </ResourceAllocation>
     </div>
@@ -266,13 +267,19 @@ export default {
         this.memberData = {
           totalTakenCredit: result.totalTakenCredit || 0, // 전체 이수학점
           majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
+
           majorGrade: result.majorGrade ? parseFloat(result.majorGrade).toFixed(2) : 0.00, // 전공 학점
           previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
           previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
+          
           totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
           generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
+          majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0,
+
+
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
-          MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
+          MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
+  
         }
         
         //추천 전공

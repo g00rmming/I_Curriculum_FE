@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <apexchart type="donut" height="350" :options="chartOptions" :series="majorSeries"></apexchart>
+        <apexchart type="donut" height="350" :options="majorChartOptions" :series="majorSeries"></apexchart>
       </div>
     </div>
     <div class="col-lg-4 col-md-12">
@@ -44,7 +44,7 @@
             </a>
           </div>
         </div>
-        <apexchart type="donut" height="350" :options="chartOptions" :series="generalSeries"></apexchart>
+        <apexchart type="donut" height="350" :options="generalChartOptions" :series="generalSeries"></apexchart>
       </div>
     </div>
     <div class="col-lg-4 col-md-12">
@@ -67,7 +67,7 @@
             </a>
           </div>
         </div>
-        <apexchart type="donut" height="350" :options="chartOptions" :series="generalCoreSeries"></apexchart>
+        <apexchart type="donut" height="350" :options="generalCoreChartOptions" :series="generalCoreSeries"></apexchart>
       </div>
     </div>
   </div>
@@ -104,6 +104,7 @@ export default {
     totalTakenCredit: Number, // 전체이수학점
     generalCoreTakenCredit:Number, //핵심교양 이수학점
     majorTakenCredit: Number, // 전공 이수 학점 
+    majorEssentialTakenCredit: Number, // 전공 필수 이수 학점
   },
   data() {
     return {
@@ -119,7 +120,7 @@ export default {
       gradeData: [3.2, 3.5, 3.8, 4.0], // 예시 성적 데이터
 
       //차트 옵션
-      chartOptions: {
+      majorChartOptions: {
         chart: {
           type: 'donut',
         },
@@ -147,8 +148,126 @@ export default {
             }
           }
         }],
-        labels: ['이수학점', '미이수학점'],
-        colors: ["#00E396", "#F05650"],
+        labels: ['전공필수', '전공선택', '미이수'],
+        colors: ["#008FFB","#00E396", "#F05650"],
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '60%',
+              labels: {
+                show: true,
+                name: {
+                  show: true,
+                },
+                value: {
+                  show: true,
+                },
+                total: {
+                  show: true,
+                  showAlways: false,
+                  label: '전체학점',
+                  fontWeight: 600,
+                  color: '#373d3f',
+                  formatter: function (w) {
+                    return w.globals.seriesTotals.reduce((a, b) => {
+                      return a + b
+                    }, 0)
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      generalChartOptions: {
+        chart: {
+          type: 'donut',
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return val.toFixed(2) + "%"
+          },
+          style: {
+            fontSize: '10px',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 'bold',
+            colors: ["#FFFFFF"]
+          },
+
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }],
+        labels: ['전공필수', '전공선택', '미이수'],
+        colors: ["#008FFB","#00E396", "#F05650"],
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '60%',
+              labels: {
+                show: true,
+                name: {
+                  show: true,
+                },
+                value: {
+                  show: true,
+                },
+                total: {
+                  show: true,
+                  showAlways: false,
+                  label: '전체학점',
+                  fontWeight: 600,
+                  color: '#373d3f',
+                  formatter: function (w) {
+                    return w.globals.seriesTotals.reduce((a, b) => {
+                      return a + b
+                    }, 0)
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      generalCoreChartOptions: {
+        chart: {
+          type: 'donut',
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return val.toFixed(2) + "%"
+          },
+          style: {
+            fontSize: '10px',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 'bold',
+            colors: ["#FFFFFF"]
+          },
+
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }],
+        labels: ['전공필수', '전공선택', '미이수'],
+        colors: ["#008FFB","#00E396", "#F05650"],
         plotOptions: {
           pie: {
             donut: {
@@ -221,8 +340,9 @@ export default {
       console.log("전공 이수 학점: ",this.majorTakenCredit);
       console.log("교양 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
       console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
+      console.log("전공 필수 이수 학점: ",this.majorEssentialTakenCredit);
       
-      this.majorSeries = [this.majorTakenCredit, 65 - this.majorTakenCredit];
+      this.majorSeries = [this.majorEssentialTakenCredit, this.majorTakenCredit - this.majorEssentialTakenCredit, 65 - this.majorTakenCredit];
       this.generalSeries = [this.totalTakenCredit - this.majorTakenCredit,65 - this.totalTakenCredit+this.majorTakenCredit];
       this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
       
