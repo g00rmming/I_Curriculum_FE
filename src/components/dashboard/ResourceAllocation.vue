@@ -126,7 +126,7 @@ export default {
         dataLabels: {
           enabled: true,
           formatter: function (val) {
-            return val + "%"
+            return val.toFixed(2) + "%"
           },
           style: {
             fontSize: '10px',
@@ -221,7 +221,7 @@ export default {
       console.log("전공 이수 학점: ",this.majorTakenCredit);
       console.log("교양 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
       console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
-
+      
       this.majorSeries = [this.majorTakenCredit, 65 - this.majorTakenCredit];
       this.generalSeries = [this.totalTakenCredit - this.majorTakenCredit,65 - this.totalTakenCredit+this.majorTakenCredit];
       this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음

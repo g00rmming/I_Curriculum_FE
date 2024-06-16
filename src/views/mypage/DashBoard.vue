@@ -266,10 +266,10 @@ export default {
         this.memberData = {
           totalTakenCredit: result.totalTakenCredit || 0, // 전체 이수학점
           majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
-          majorGrade: result.majorGrade || 0, // 전공 학점성적
+          majorGrade: result.majorGrade ? parseFloat(result.majorGrade).toFixed(2) : 0.00, // 전공 학점
           previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
           previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
-          totalGrade: result.totalGrade || 0, // 총 학점 성적
+          totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
           generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
@@ -277,8 +277,8 @@ export default {
         
         //추천 전공
         this.majorList = {
-          major: "전필",
-          DataList: result.majorEssentialDTO.untakenTop5CourseDTOList.map(course => ({
+          major: "전공",
+          DataList: result.majorSelectiveDTO.untakenTop5CourseDTOList.map(course => ({
             hak: course.courseCode,
             name: course.courseName,
             grade: course.credit
@@ -314,7 +314,7 @@ export default {
       const increase = finalValue - initialValue;
       const percentageIncrease = (increase / initialValue) * 100;
       // 결과 반환
-      return percentageIncrease;
+      return percentageIncrease.toFixed(2);
     }
 
   },
