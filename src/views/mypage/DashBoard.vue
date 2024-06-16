@@ -59,7 +59,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title ">전체 이수학점</h3>
-                <div class="h1 my-1 me-2">{{ memberData.totalTakenCredit }} / 160
+                <div class="h1 my-1 me-2">{{ memberData.totalTakenCredit }} / 130
                 </div>
 
               </div>
@@ -213,7 +213,27 @@
         </div>
       </div>
       <!--  영역 끝-->
-      <ResourceAllocation :majorList="majorList" :generalList="generalList" :generalCoreList="generalCoreList"></ResourceAllocation>
+      <ResourceAllocation :majorList="majorList" 
+      :generalList="generalList" 
+      :generalCoreList="generalCoreList" 
+      :majorSeries="majorSeries" 
+      :generalSeries="generalSeries" 
+      :generalCoreSeries="generalCoreSeries" 
+      :totalTakenCredit="memberData.totalTakenCredit"
+      :majorTakenCredit="memberData.majorTakenCredit"
+      :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
+      :majorEssentialTakenCredit="memberData.majorEssentialTakenCredit"
+      :generalEssentialTakenCredit="memberData.generalEssentialTakenCredit"
+      :one="memberData.one"
+      :two="memberData.two"
+      :three="memberData.three"
+      :four="memberData.four"
+      :five="memberData.five"
+      :six="memberData.six"
+      :creative="memberData.creative"
+
+      >
+    </ResourceAllocation>
     </div>
   </div>
 </template>
@@ -246,23 +266,68 @@ export default {
     // todo : 데이터 불러오기 가능
     fetchData() {
       this.onLoading = true;
+      const userId=localStorage.getItem('memberId');
       this.$axios.get('/v1/dashboard', {
         params: {
-          memberId: 1,  // todo 현재 학생 성적으로 바꿔야함
+          memberId: userId,  
         }
       }).then((res) => {
         console.log(res.data.result);
         const result = res.data.result;
         this.memberData = {
-          totalTakenCredit: result.totalTakenCredit,
-          majorTakenCredit: result.majorTakenCredit, // 전공 이수학점
-          majorGrade: result.majorGrade, // 전공 학점성적
-          previousMajorGrade: result.previousMajorGrade, // 전학기까지 전공 학점성적 
-          previousTotalGrade: result.previousTotalGrade, // 전학기총 학점 성적
-          totalGrade: result.totalGrade, // 총 학점 성적
+          totalTakenCredit: result.totalTakenCredit || 0, // 전체 이수학점
+          majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
+
+          majorGrade: result.majorGrade ? parseFloat(result.majorGrade).toFixed(2) : 0.00, // 전공 학점
+          previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
+          previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
+          
+          totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
+          generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
+          generalEssentialTakenCredit: result.generalEssentialDTO.takenCredit|| 0, // 교양 필수 학점
+          majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0, //전공 필수 학점
+
+          one: result.generalCoreDTO.takeOne,
+          two: result.generalCoreDTO.takeTwo,
+          three: result.generalCoreDTO.takeThree,
+          four: result.generalCoreDTO.takeFour,
+          five: result.generalCoreDTO.takeFive,
+          six: result.generalCoreDTO.takeSix,
+          creative: result.generalCoreDTO.takeCreative,
+
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
-          MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
+          MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
+  
         }
+        
+        //추천 전공
+        this.majorList = {
+          major: "전공",
+          DataList: result.majorSelectiveDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
+          // 추천 교양 
+          this.generalList = {
+          major: "교양",
+          DataList: result.generalEssentialDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
+
+          //추천 핵심 교양
+          this.generalCoreList = {
+          major: "핵교",
+          DataList: result.generalCoreDTO.takenCategoryDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
         
         this.onLoading = false;
       }).catch((err) => {
@@ -274,7 +339,7 @@ export default {
       const increase = finalValue - initialValue;
       const percentageIncrease = (increase / initialValue) * 100;
       // 결과 반환
-      return percentageIncrease;
+      return percentageIncrease.toFixed(2);
     }
 
   },
