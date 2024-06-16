@@ -59,7 +59,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title ">전체 이수학점</h3>
-                <div class="h1 my-1 me-2">{{ memberData.totalTakenCredit }} / 160
+                <div class="h1 my-1 me-2">{{ memberData.totalTakenCredit }} / 130
                 </div>
 
               </div>
