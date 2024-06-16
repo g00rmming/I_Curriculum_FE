@@ -385,6 +385,13 @@ export default {
       this.generalCoreChartOptions.plotOptions.pie.donut.labels.total.label = '핵심교양 요구 사항 충족';
       
     } 
+    if (this.generalCoreTakenCredit === 0) {
+      this.generalCoreSeries = [12];
+      this.generalCoreChartOptions.labels = ['미이수'];
+      this.generalCoreChartOptions.colors = ['#F05650']; // 미이수 색상
+      
+      
+    } 
       
     },
     openMajorModal() {
@@ -406,12 +413,12 @@ export default {
 
     },
     openGeneralCoreModal(){
-      if(this.generalCoreTakenCredit >=1){
+      if(this.generalCoreTakenCredit >=12){
      
      this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
    
    }else{
-     this.modalGeneralVisible = true;
+     this.modalGeneralCoreVisible = true;
    }
     },
   }
