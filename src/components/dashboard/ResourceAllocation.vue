@@ -103,6 +103,7 @@ export default {
     generalCoreList: [], // 핵교
     totalTakenCredit: Number, // 전체이수학점
     generalCoreTakenCredit:Number, //핵심교양 이수학점
+    generalEssentialTakenCredit: Number, // 교양 필수 이수학점
     majorTakenCredit: Number, // 전공 이수 학점 
     majorEssentialTakenCredit: Number, // 전공 필수 이수 학점
   },
@@ -207,8 +208,8 @@ export default {
             }
           }
         }],
-        labels: ['전공필수', '전공선택', '미이수'],
-        colors: ["#008FFB","#00E396", "#F05650"],
+        labels: ['교양필수', '교양선택','핵심교양','미이수'],
+        colors: ["#008FFB","#00E396",'#FEB019',"#F05650"],
         plotOptions: {
           pie: {
             donut: {
@@ -338,12 +339,14 @@ export default {
 
       console.log("전체 이수 학점: ",this.totalTakenCredit);
       console.log("전공 이수 학점: ",this.majorTakenCredit);
-      console.log("교양 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
+
+      console.log("교양 선택 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
+      console.log("교양 필수 이수 학점",this.generalEssentialTakenCredit);
       console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
+
       console.log("전공 필수 이수 학점: ",this.majorEssentialTakenCredit);
-      
       this.majorSeries = [this.majorEssentialTakenCredit, this.majorTakenCredit - this.majorEssentialTakenCredit, 65 - this.majorTakenCredit];
-      this.generalSeries = [this.totalTakenCredit - this.majorTakenCredit,65 - this.totalTakenCredit+this.majorTakenCredit];
+      this.generalSeries = [this.generalEssentialTakenCredit,this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit,this.generalCoreTakenCredit,65-this.generalEssentialTakenCredit-this.totalTakenCredit+this.majorTakenCredit];
       this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
       
       this.lineChartSeries = [{

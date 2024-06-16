@@ -223,6 +223,7 @@
       :majorTakenCredit="memberData.majorTakenCredit"
       :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
       :majorEssentialTakenCredit="memberData.majorEssentialTakenCredit"
+      :generalEssentialTakenCredit="memberData.generalEssentialTakenCredit"
       >
     </ResourceAllocation>
     </div>
@@ -274,8 +275,8 @@ export default {
           
           totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
           generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
-          majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0,
-
+          generalEssentialTakenCredit: result.generalEssentialDTO.takenCredit|| 0, // 교양 필수 학점
+          majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0, //전공 필수 학점
 
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
