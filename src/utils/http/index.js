@@ -23,9 +23,12 @@ axios.interceptors.response.use(response => {
     }
     // return Promise.reject(error);
 });
+
+const token=localStorage.getItem('authorization');
 const defaultHeader = {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Authorization': `${token}`,
 }
 
 

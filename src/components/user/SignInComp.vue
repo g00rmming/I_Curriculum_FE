@@ -58,6 +58,8 @@
 </template>
 
 <script>
+
+
 export default {
   inject: ['$axios'],
   data() {
@@ -75,6 +77,8 @@ export default {
   methods: {
     userValidation() {
       // 로그인 검증 로직 추가
+      
+      
       if (this.loginInfo.email && this.loginInfo.password) {
         // 예제에서는 간단히 조건을 체크하여 로그인 처리를 합니다.
         // 실제로는 백엔드와 통신하여 인증을 수행해야 합니다.
@@ -94,8 +98,11 @@ export default {
           // 토큰을 LocalStorage에 저장
           localStorage.setItem("authorization", res.headers.authorization);
           localStorage.setItem("isAuthenticated", true);
-
-          this.$store.commit('setUser', { username: this.loginInfo.email });
+          localStorage.setItem("memberId", res.data.memberId);
+          console.log(res);
+          // this.$store.commit('setUser', { username: res.data.memberId });
+          console.log(localStorage)
+          
           this.$router.push({ name: 'dashboard' });
         })
           .catch((err) => {
