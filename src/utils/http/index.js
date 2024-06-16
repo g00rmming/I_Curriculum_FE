@@ -12,7 +12,6 @@ axios.interceptors.response.use(response => {
     console.log("응답이완료 ", response.config.url);
     return response;
 }, error => {
-    // TODO 윤덕진 개발 완료 후 운영 환경에서는 제거
     // 프로그램 방식으로 컴포넌트 호출
     
     if(error.response.status===401) {
@@ -28,6 +27,7 @@ const defaultHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
 }
+
 
 // 토근을 받아와서 헤더를 생성할때의 기본 헤더
 // const tokenHeader = (token) => {

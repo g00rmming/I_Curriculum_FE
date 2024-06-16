@@ -34,6 +34,10 @@ module.exports = defineConfig({
       '/v1': {
         target: `${springbootUrl}:${springport}/api`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
+      },
+      '/login':{
+        target: `${springbootUrl}:${springport}`, // 로그인
+        changeOrigin: true,
       }
     }
   }
