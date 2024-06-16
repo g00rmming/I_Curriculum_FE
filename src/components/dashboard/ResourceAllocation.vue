@@ -83,7 +83,7 @@
       </div>
   </div>
 
-  <RecommendComp :isVisible="modalvisable" @close="modalvisable = false" :RecommendDataList="dumyData"> </RecommendComp>
+  <RecommendComp :isVisible="modalvisable" @close="modalvisable = false" :RecommendDataList="majorList"> </RecommendComp>
 
 </template>
 
@@ -97,7 +97,7 @@ export default {
     RecommendComp: RecommendComp,
   },
   props: {
-    majorList: {},  // 전공
+    majorList: [],  // 전공
     generalList: {}, // 교양 
     generalCoreList: {}, // 핵교
     totalTakenCredit: Number, // 전공 이수학점
@@ -106,26 +106,7 @@ export default {
   },
   data() {
     return {
-      dumyData: {  // 추천해줘야하는 과목들
-        major: "전필",
-        DataList: [
-          {
-            hak: "CSE5555",
-            name: "알고리즘",
-            grade: 3
-          },
-          {
-            hak: "CSE1234",
-            name: "컴퓨터네트워크",
-            grade: 3
-          },
-          {
-            hak: "god3456",
-            name: "DB",
-            grade: 3
-          },
-        ]
-      },
+      
       modalvisable: false,// 모달 visable
       // 차트 데이터
       majorSeries: [], // 전공

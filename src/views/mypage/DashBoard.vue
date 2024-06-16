@@ -265,7 +265,7 @@ export default {
         console.log(res.data.result);
         const result = res.data.result;
         this.memberData = {
-          totalTakenCredit: result.totalTakenCredit || 0,
+          totalTakenCredit: result.totalTakenCredit || 0, // 전체 이수학점
           majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
           majorGrade: result.majorGrade || 0, // 전공 학점성적
           previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
@@ -276,7 +276,15 @@ export default {
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
         }
-        
+
+        this.majorList = {
+          major: "전필",
+          DataList: result.majorEssentialDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
         
         this.onLoading = false;
       }).catch((err) => {
