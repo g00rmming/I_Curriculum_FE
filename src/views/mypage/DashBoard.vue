@@ -276,7 +276,8 @@ export default {
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
         }
-
+        
+        //추천 전공
         this.majorList = {
           major: "전필",
           DataList: result.majorEssentialDTO.untakenTop5CourseDTOList.map(course => ({
@@ -285,7 +286,16 @@ export default {
             grade: course.credit
           }))
         };
-        
+          // 추천 교양 
+          this.generalList = {
+          major: "교양",
+          DataList: result.generalEssentialDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
+
         this.onLoading = false;
       }).catch((err) => {
         console.log(err);
