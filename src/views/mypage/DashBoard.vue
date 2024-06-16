@@ -296,6 +296,16 @@ export default {
           }))
         };
 
+          //추천 핵심 교양
+          this.generalCoreList = {
+          major: "핵교",
+          DataList: result.generalCoreDTO.takenCategoryDTO.untakenTop5CourseDTOList.map(course => ({
+            hak: course.courseCode,
+            name: course.courseName,
+            grade: course.credit
+          }))
+        };
+        
         this.onLoading = false;
       }).catch((err) => {
         console.log(err);

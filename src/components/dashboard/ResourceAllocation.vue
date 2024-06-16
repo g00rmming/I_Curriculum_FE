@@ -53,7 +53,7 @@
           <h3 class="card-title">핵심 교양</h3>
           <div class="card-actions btn-actions">
             <span class="recommend-text">추천과목</span>
-            <a href="#" class="btn-action"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
+            <a href="#" class="btn-action" @click="openGeneralCoreModal"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-book">
@@ -85,6 +85,7 @@
 
   <RecommendComp :isVisible="modalMajorVisible" @close="modalMajorVisible = false" :RecommendDataList="majorList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralVisible" @close="modalGeneralVisible = false" :RecommendDataList="generalList"> </RecommendComp>
+  <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
 </template>
 
 <script>
@@ -108,6 +109,7 @@ export default {
     return {
       modalMajorVisible: false, // 전공 모달
       modalGeneralVisible: false, // 교양 모달
+      modalGeneralCoreVisible: false,//핵교 모달
       // 차트 데이터
       majorSeries: [], // 전공
       generalSeries: [], //교양
@@ -213,7 +215,7 @@ export default {
     fetchData(){
       console.log('Major List:', this.majorList);
       console.log('Major List:', this.generalList);
-      // console.log('General Core List:', this.generalCoreList);
+      console.log('General Core List:', this.generalCoreList);
 
       // console.log("전공 이수 학점: ",this.totalTakenCredit);
       // console.log("교양 이수 학점: ",this.generalTakenCredit);
@@ -236,7 +238,9 @@ export default {
     openGeneralModal() {
       this.modalGeneralVisible = true;
     },
-
+    openGeneralCoreModal(){
+      this.modalGeneralCoreVisible = true;
+    },
   }
 };
 </script>
