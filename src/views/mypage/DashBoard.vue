@@ -176,7 +176,7 @@
                     class="text-yellow d-inline-flex align-items-center lh-1">
                     성적 정보 없음
                   </span>
-                  <span v-else-if="memberData.majorGradeIncrese > 0"
+                  <span v-else-if="memberData.MajorGradeIncrese > 0"
                     class="text-green d-inline-flex align-items-center lh-1">
                     {{memberData.totalGradeIncrese}}%증가
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24"
@@ -185,7 +185,7 @@
                       <path d="M14 7l7 0l0 7" />
                     </svg>
                   </span>
-                  <span v-else-if="memberData.majorGradeIncrese === 0"
+                  <span v-else-if="memberData.MajorGradeIncrese === 0"
                     class="text-yellow d-inline-flex align-items-center lh-1">
                     변함 없음
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24"
@@ -195,7 +195,7 @@
                     </svg>
                   </span>
                   <span v-else class="text-red d-inline-flex align-items-center lh-1">
-                    {{ memberData.majorGradeIncrese }}%감소
+                    {{ memberData.MajorGradeIncrese }}%감소
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trending-down"
                       width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                       stroke-linecap="round" stroke-linejoin="round">
@@ -279,10 +279,12 @@ export default {
           majorTakenCredit: result.majorTakenCredit || 0, // 전공 이수학점
 
           majorGrade: result.majorGrade ? parseFloat(result.majorGrade).toFixed(2) : 0.00, // 전공 학점
-          previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
-          previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
-          
+          previousMajorGrade: result.previousMajorGrade? parseFloat(result.previousMajorGrade).toFixed(2) : 0.00, // 전학기까지 전공 학점성적 
+
           totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
+          previousTotalGrade: result.previousTotalGrade? parseFloat(result.previousTotalGrade).toFixed(2) : 0.00, // 전학기총 학점 성적
+
+         
           generalCoreTakenCredit: result.generalCoreDTO.totalCredit || 0, // 핵심교양 이수학점
           generalEssentialTakenCredit: result.takenGeneralDTO.takenEssentialCredit|| 0, // 교양 필수 학점
           majorEssentialTakenCredit: result.takenMajorDTO.takenEssentialCredit|| 0, //전공 필수 학점
@@ -297,9 +299,9 @@ export default {
 
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
-  
+
         }
-        
+        console.log("seok",this.memberData.MajorGradeIncrese);
         //추천 전공
         this.majorList = {
           major: "전공",
@@ -338,8 +340,9 @@ export default {
       // 증가율 계산
       const increase = finalValue - initialValue;
       const percentageIncrease = (increase / initialValue) * 100;
+
       // 결과 반환
-      return percentageIncrease.toFixed(2);
+      return percentageIncrease;
     }
 
   },
