@@ -283,9 +283,9 @@ export default {
           previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
           
           totalGrade: result.totalGrade ? parseFloat(result.totalGrade).toFixed(2) : 0.00, // 총 학점 
-          generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
-          generalEssentialTakenCredit: result.generalEssentialDTO.takenCredit|| 0, // 교양 필수 학점
-          majorEssentialTakenCredit: result.majorEssentialDTO.takenCredit|| 0, //전공 필수 학점
+          generalCoreTakenCredit: result.generalCoreDTO.totalCredit || 0, // 핵심교양 이수학점
+          generalEssentialTakenCredit: result.takenGeneralDTO.takenEssentialCredit|| 0, // 교양 필수 학점
+          majorEssentialTakenCredit: result.takenMajorDTO.takenEssentialCredit|| 0, //전공 필수 학점
 
           one: result.generalCoreDTO.takeOne,
           two: result.generalCoreDTO.takeTwo,
@@ -303,7 +303,7 @@ export default {
         //추천 전공
         this.majorList = {
           major: "전공",
-          DataList: result.majorSelectiveDTO.untakenTop5CourseDTOList.map(course => ({
+          DataList: result.takenMajorDTO.untakenTop5CourseDTOList.map(course => ({
             hak: course.courseCode,
             name: course.courseName,
             grade: course.credit
@@ -312,7 +312,7 @@ export default {
           // 추천 교양 
           this.generalList = {
           major: "교양",
-          DataList: result.generalEssentialDTO.untakenTop5CourseDTOList.map(course => ({
+          DataList: result.takenGeneralDTO.untakenTop5CourseDTOList.map(course => ({
             hak: course.courseCode,
             name: course.courseName,
             grade: course.credit
@@ -322,7 +322,7 @@ export default {
           //추천 핵심 교양
           this.generalCoreList = {
           major: "핵교",
-          DataList: result.generalCoreDTO.takenCategoryDTO.untakenTop5CourseDTOList.map(course => ({
+          DataList: result.generalCoreDTO.untakenTop5CourseDTOList.map(course => ({
             hak: course.courseCode,
             name: course.courseName,
             grade: course.credit
