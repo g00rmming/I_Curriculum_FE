@@ -220,9 +220,8 @@
       :generalSeries="generalSeries" 
       :generalCoreSeries="generalCoreSeries" 
       :totalTakenCredit="memberData.totalTakenCredit"
+      :majorTakenCredit="memberData.majorTakenCredit"
       :generalCoreTakenCredit="memberData.generalCoreTakenCredit"
-      :generalTakenCredit="memberData.generalTakenCredit"
-     
       >
     </ResourceAllocation>
     </div>
@@ -271,8 +270,7 @@ export default {
           previousMajorGrade: result.previousMajorGrade || 0, // 전학기까지 전공 학점성적 
           previousTotalGrade: result.previousTotalGrade|| 0, // 전학기총 학점 성적
           totalGrade: result.totalGrade || 0, // 총 학점 성적
-          generalTakenCredit: result.generalTakenCredit || 0, // 교양 이수학점
-          generalCoreTakenCredit: result.generalCoreTakenCredit || 0, // 핵심교양 이수학점
+          generalCoreTakenCredit: result.generalCoreDTO.takenCategoryDTO.takenCredit || 0, // 핵심교양 이수학점
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade)
         }

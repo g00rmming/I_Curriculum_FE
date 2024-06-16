@@ -30,7 +30,7 @@
           <h3 class="card-title">교양</h3>
           <div class="card-actions btn-actions">
             <span class="recommend-text">추천과목</span>
-            <a href="#" class="btn-action" @click="openGeneralModal">
+            <a class="btn-action" @click="openGeneralModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-book">
@@ -53,7 +53,7 @@
           <h3 class="card-title">핵심 교양</h3>
           <div class="card-actions btn-actions">
             <span class="recommend-text">추천과목</span>
-            <a href="#" class="btn-action" @click="openGeneralCoreModal"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
+            <a class="btn-action" @click="openGeneralCoreModal"><!-- Download SVG icon from http://tabler-icons.io/i/refresh -->
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-book">
@@ -101,9 +101,9 @@ export default {
     majorList: [],  // 전공
     generalList: [], // 교양 
     generalCoreList: [], // 핵교
-    totalTakenCredit: Number, // 전공 이수학점
+    totalTakenCredit: Number, // 전체이수학점
     generalCoreTakenCredit:Number, //핵심교양 이수학점
-    generalTakenCredit: Number, //일반교양 이수학점
+    majorTakenCredit: Number, // 전공 이수 학점 
   },
   data() {
     return {
@@ -217,13 +217,13 @@ export default {
       console.log('Major List:', this.generalList);
       console.log('General Core List:', this.generalCoreList);
 
-      // console.log("전공 이수 학점: ",this.totalTakenCredit);
-      // console.log("교양 이수 학점: ",this.generalTakenCredit);
-      // console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
+      console.log("전체 이수 학점: ",this.totalTakenCredit);
+      console.log("전공 이수 학점: ",this.majorTakenCredit);
+      console.log("교양 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
+      console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
 
-      this.majorSeries = [this.totalTakenCredit,65 - this.totalTakenCredit];
-      
-      this.generalSeries = [this.generalCoreTakenCredit,65 - this.generalCoreTakenCredit];
+      this.majorSeries = [this.majorTakenCredit, 65 - this.majorTakenCredit];
+      this.generalSeries = [this.totalTakenCredit - this.majorTakenCredit,65 - this.totalTakenCredit+this.majorTakenCredit];
       this.generalCoreSeries = [this.generalCoreTakenCredit]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
       
       this.lineChartSeries = [{
