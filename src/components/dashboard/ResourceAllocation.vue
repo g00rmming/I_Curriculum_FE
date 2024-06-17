@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="row row-cards mt-0">
     <div class="col-lg-4 col-md-12">
       <div class="border card">
@@ -75,6 +76,7 @@
   <RecommendComp :isVisible="modalMajorVisible" @close="modalMajorVisible = false" :RecommendDataList="majorList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralVisible" @close="modalGeneralVisible = false" :RecommendDataList="generalList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
+</div>
 </template>
 
 <script>
@@ -341,11 +343,11 @@ export default {
       this.generalCoreChartOptions.plotOptions.pie.donut.labels.total.label = '핵심교양 요구 사항 충족';
       
     } 
+
     if (this.generalCoreTakenCredit === 0) {
-      this.generalCoreSeries = [12];
+      this.generalCoreSeries = [this.standardCredit];
       this.generalCoreChartOptions.labels = ['미이수'];
       this.generalCoreChartOptions.colors = ['#F05650']; // 미이수 색상
-      
       
     } 
       
@@ -372,15 +374,16 @@ export default {
       if(this.standardCredit ===9){
         if(this.generalCoreTakenCredit === 9){
           this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
+        }else{
+          this.modalGeneralCoreVisible = true;
         }
       }else if(this.standardCredit === 12){
         if(this.generalCoreTakenCredit === 12){
           this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
+        }else{
+          this.modalGeneralCoreVisible = true;
         }
       }
-   else{
-     this.modalGeneralCoreVisible = true;
-   }
     },
   }
 };
