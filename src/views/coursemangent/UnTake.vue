@@ -118,7 +118,7 @@
                                     <th>과목명</th>
                                     <th>영역</th>
                                     <th>학점</th>
-                                    <th>이수학기</th>
+                                    <th>이수학년</th>
                                     <th class="w-1"></th>
                                 </tr>
                             </thead>
@@ -195,7 +195,7 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
                                     </tr>
                                 </thead>
@@ -220,7 +220,7 @@
                                         <th>학수번호</th>
                                         <th>과목명</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
                                     </tr>
                                 </thead>
@@ -831,13 +831,11 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted 호출됨');
         this.fetchData();
     },
     methods: {
         fetchData() { // 데이터를 가져오는 함수
             this.onLoading = true;
-            console.log('fetchData 호출됨'); // 로그 추가
             const userId=localStorage.getItem('memberId');
             this.$axios.get('/v1/courses/untake', {
                 params: {
@@ -845,7 +843,6 @@ export default {
                 }
             })
             .then(response => { 
-                console.log('응답 받음:', response.data);
                 const responseList = response.data.result.untakenCourseDTOList;
                 this.unTakeList = responseList.map(item => ({
                     hak: item.courseCode, // 학수번호
@@ -853,10 +850,10 @@ export default {
                     name: item.courseName, // 과목명
                     code: item.categoryName, // 영역
                     grade: item.credit, // 학점
-                    year: item.level, // 이수학기
+                    year: item.level, // 이수학년
                     people: item.takenNumber // 수강인원
                 }));
-                console.log("here", this.unTakeList);
+
             })
             .catch(error => {
                 console.error('오류 발생1:', error); // 오류 로그 추가
@@ -889,7 +886,7 @@ export default {
         const createTakeDTOList = this.MyBucketList.map(item => {
                 return {
                     courseId: Number(item.courseId), // 실제 데이터에서 적절한 필드를 매핑하세요
-                    takenTerm: Number(item.myYear), // 이수학기
+                    takenTerm: Number(item.myYear), // 이수학년
                     grade: String(item.myGrade), // 성적 (문자열로 변환)
                     category: String(item.code) // 영역
                 };
@@ -922,16 +919,7 @@ export default {
 ,
         addItem(item) { // 장바구니에 추가하는 함수
             const addItem = item;
-            this.MyBucketList.push(addItem)
-            this.MyBucketList.forEach((item, index) => {
-            console.log(`Item ${index + 1}:`);
-            console.log(`  courseId: ${item.courseId}`);
-            console.log(`  hak: ${item.hak}`);
-            console.log(`  name: ${item.name}`);
-            console.log(`  code: ${item.code}`);
-            console.log(`  myGrade: ${item.myGrade}`);
-            console.log(`  myYear: ${item.myYear}`);
-        });
+            this.MyBucketList.push(addItem);
 
             this.$refs.updateModalComponent.closeModal();
             this.$swal("장바구니 추가완료", '', "success");
