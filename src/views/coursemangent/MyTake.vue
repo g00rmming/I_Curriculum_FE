@@ -18,32 +18,41 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                     <li class="nav-item">
-                        <a href="#tabs-all" :class="{ active: tabId === 'tabs-all' }" class="nav-link" @click="handleTabClick('tabs-all')" data-bs-toggle="tab">전체</a>
+                        <a href="#tabs-all" :class="{ active: tabId === 'tabs-all' }" class="nav-link"
+                            @click="handleTabClick('tabs-all')" data-bs-toggle="tab">전체</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#tabs-1" :class="{ active: tabId === 'tabs-1' }" class="nav-link" @click="handleTabClick('tabs-1')" data-bs-toggle="tab">1학년</a>
+                        <a href="#tabs-1" :class="{ active: tabId === 'tabs-1' }" class="nav-link"
+                            @click="handleTabClick('tabs-1')" data-bs-toggle="tab">1학년</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#tabs-2" :class="{ active: tabId === 'tabs-2' }" class="nav-link" @click="handleTabClick('tabs-2')" data-bs-toggle="tab">2학년</a>
+                        <a href="#tabs-2" :class="{ active: tabId === 'tabs-2' }" class="nav-link"
+                            @click="handleTabClick('tabs-2')" data-bs-toggle="tab">2학년</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#tabs-3" :class="{ active: tabId === 'tabs-3' }" class="nav-link" @click="handleTabClick('tabs-3')" data-bs-toggle="tab">3학년</a>
+                        <a href="#tabs-3" :class="{ active: tabId === 'tabs-3' }" class="nav-link"
+                            @click="handleTabClick('tabs-3')" data-bs-toggle="tab">3학년</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#tabs-4" :class="{ active: tabId === 'tabs-4' }" class="nav-link" @click="handleTabClick('tabs-4')" data-bs-toggle="tab">4학년</a>
+                        <a href="#tabs-4" :class="{ active: tabId === 'tabs-4' }" class="nav-link"
+                            @click="handleTabClick('tabs-4')" data-bs-toggle="tab">4학년</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ semesterLabel }}</a>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">{{ semesterLabel }}</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" @click="handleSemesterClick(null)">전체</a>
                             <a class="dropdown-item" href="#" @click="handleSemesterClick(1)">1학기</a>
                             <a class="dropdown-item" href="#" @click="handleSemesterClick(2)">2학기</a>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
-
-            <div class="card-body">
+<!--데이터를 불러오는중이면 로딩바-->
+<div v-if="onLoading" class="progress progress-sm">
+                    <div class="progress-bar progress-bar-indeterminate bg-red"></div>
+                </div>
+            <div v-else class="card-body">
                 <div class="tab-content">
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-all' }">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -57,13 +66,15 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 15%;">
                                         <col style="width: 20%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 15%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 5%;">
                                     </colgroup>
                                     <tr>
                                         <th>선택</th>
@@ -71,8 +82,10 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>성적</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,9 +95,11 @@
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
                                         </tr>
                                     </template>
                                     <template v-else>
@@ -108,13 +123,15 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 15%;">
                                         <col style="width: 20%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 15%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 5%;">
                                     </colgroup>
                                     <tr>
                                         <th>선택</th>
@@ -122,30 +139,36 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>성적</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-if="filteredDataList['1'].length || filteredDataList['2'].length">
+                                    <template v-if="filteredDataList['1'].length">
                                         <tr v-for="item in filteredDataList['1']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
                                         </tr>
-                                        <tr v-for="item in filteredDataList['2']" :key="item.takeId">
+                                        <!-- <tr v-for="item in filteredDataList['2']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
-                                        </tr>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
+                                        </tr> -->
                                     </template>
                                     <template v-else>
                                         <tr>
@@ -168,13 +191,15 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 15%;">
                                         <col style="width: 20%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 15%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 5%;">
                                     </colgroup>
                                     <tr>
                                         <th>선택</th>
@@ -182,30 +207,36 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>성적</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-if="filteredDataList['3'].length || filteredDataList['4'].length">
-                                        <tr v-for="item in filteredDataList['3']" :key="item.takeId">
+                                    <template v-if="filteredDataList['2'].length">
+                                        <tr v-for="item in filteredDataList['2']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
                                         </tr>
-                                        <tr v-for="item in filteredDataList['4']" :key="item.takeId">
+                                        <!-- <tr v-for="item in filteredDataList['4']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
-                                        </tr>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
+                                        </tr> -->
                                     </template>
                                     <template v-else>
                                         <tr>
@@ -228,13 +259,15 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 15%;">
                                         <col style="width: 20%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 15%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 5%;">
                                     </colgroup>
                                     <tr>
                                         <th>선택</th>
@@ -242,30 +275,36 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>성적</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-if="filteredDataList['5'].length || filteredDataList['6'].length">
-                                        <tr v-for="item in filteredDataList['5']" :key="item.takeId">
+                                    <template v-if="filteredDataList['3'].length">
+                                        <tr v-for="item in filteredDataList['3']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
                                         </tr>
-                                        <tr v-for="item in filteredDataList['6']" :key="item.takeId">
+                                        <!-- <tr v-for="item in filteredDataList['6']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
-                                        </tr>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
+                                        </tr> -->
                                     </template>
                                     <template v-else>
                                         <tr>
@@ -288,13 +327,15 @@
                             <table class="table table-vcenter">
                                 <thead>
                                     <colgroup>
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 15%;">
                                         <col style="width: 20%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 15%;">
                                         <col style="width: 10%;">
                                         <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 5%;">
                                     </colgroup>
                                     <tr>
                                         <th>선택</th>
@@ -302,30 +343,36 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>성적</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <template v-if="filteredDataList['7'].length || filteredDataList['8'].length">
-                                        <tr v-for="item in filteredDataList['7']" :key="item.takeId">
+                                    <template v-if="filteredDataList['4'].length">
+                                        <tr v-for="item in filteredDataList['4']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
                                         </tr>
-                                        <tr v-for="item in filteredDataList['8']" :key="item.takeId">
+                                        <!-- <tr v-for="item in filteredDataList['8']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.grade }}</td>
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
-                                        </tr>
+                                            <button @click="toggleModal(item)" class="btn btn-primary">수정</button>
+                                        </tr> -->
                                     </template>
                                     <template v-else>
                                         <tr>
@@ -339,14 +386,22 @@
                 </div>
             </div>
         </div>
+        <TakeBuket ref="updateModalComponent" :modalType="modalType" :courseData="courseData" :updateItem="updateItem">
+        </TakeBuket>
     </div>
 </template>
 
 <script>
+import TakeBuket from './component/TakeBuket.vue'
 export default {
     inject: ['$axios'],
+    components: {
+        TakeBuket: TakeBuket,
+    },
     data() {
         return {
+            onLoading:false,
+            courseData: {},
             dataList: {
                 'all': [],
                 '1': [],
@@ -403,28 +458,74 @@ export default {
                 }
             }
         },
-        fetchData() {
+        updateItem(takeId, item) {
+            this.onLoading = true;
             const userId = localStorage.getItem('memberId');
+            const updateTakenCourseDTO = {
+                takenTerm: Number(item.myYear), // 이수학년
+                grade: String(item.myGrade), // 성적 (문자열로 변환)
+            };
+            const bindingResult = {};
+            this.$axios.patch(`/v1/courses/take/${takeId}`, updateTakenCourseDTO, bindingResult, {
+                params: {
+                    memberId: userId // 실제 사용자 ID로 변경
+                }
+            })
+                .then(response => {
+                    console.log('응답 받음:', response.data);
+                    this.$refs.updateModalComponent.closeModal();
+                    this.$swal("수정완료", '', 'success')
+                    .then(() => {
+                        this.fetchData();
+                    })
+                })
+                .catch(error => {
+                    console.error('오류 발생2:', error);
+                    this.$swal("수정에 실패했습니다.", '', "error");
+                })
+                .finally(() => {
+                    this.onLoading = false;
+                });
+        },
+        toggleModal(item) { // 장바구니 모달 여는 함수
+            this.courseData = {
+                    hak: item.courseCode, // 학수번호
+                    courseId: item.courseId,
+                    name: item.courseName, // 과목명
+                    code: item.categoryName, // 영역
+                    grade: item.credit, // 학점
+                    year: item.level, // 이수학년
+                    people: item.takenNumber // 수강인원
+                };
+            this.modalType = item.takeId;
+            this.$refs.updateModalComponent.clickModal();
+        },
+        fetchData() {
+            this.onLoading = true;
+            const userId = localStorage.getItem('memberId');
+            
             this.$axios.get('/v1/courses/take', {
                 params: {
                     memberId: userId // 실제 사용자 ID로 변경
                 }
             })
-            .then(response => {
-                const responseList = response.data.result.takenCourseDTOList; // 서버에서 받은 데이터에 맞게 변경
-                console.log('받은 데이터:', responseList); // 받아온 데이터 로그
-                if (Array.isArray(responseList)) {
-                    this.dataList.all = responseList;
-                    this.loadAllTabsData();
-                    this.updateFilteredDataList();
-                } else {
-                    console.error('받은 데이터가 배열이 아닙니다:', responseList);
-                }
-            })
-            .catch(error => {
-                console.error('데이터 가져오기 실패:', error);
-                this.$swal("로그인을 해주세요.", '', "error");
-            });
+                .then(response => {
+                    const responseList = response.data.result.takenCourseDTOList; // 서버에서 받은 데이터에 맞게 변경
+                    if (Array.isArray(responseList)) {
+                        this.dataList.all = responseList;
+                        this.loadAllTabsData();
+                        this.updateFilteredDataList();
+                    } else {
+                        console.error('받은 데이터가 배열이 아닙니다:', responseList);
+                    }
+                })
+                .catch(error => {
+                    console.error('데이터 가져오기 실패:', error);
+                    this.$swal("로그인을 해주세요.", '', "error");
+                })
+                .finally(() => {
+                    this.onLoading = false;
+                });
         },
         loadAllTabsData() {
             this.dataList['1'] = this.filterDataByYear(1);
