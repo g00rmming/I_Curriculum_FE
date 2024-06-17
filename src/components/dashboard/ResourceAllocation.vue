@@ -85,7 +85,7 @@
 
   <RecommendComp :isVisible="modalMajorVisible" @close="modalMajorVisible = false" :RecommendDataList="majorList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralVisible" @close="modalGeneralVisible = false" :RecommendDataList="generalList"> </RecommendComp>
-  <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreeVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
+  <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
 </template>
 
 <script>
