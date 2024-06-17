@@ -12,43 +12,95 @@
                             <small class="text-secondary ms-auto">24</small>
                         </a>
                     </div>
-                    <div class="subheader mb-2">강의명</div>
-                    <div class="mb-3">
-                        <input placeholder="강의명을 입력하세요">
-                    </div>
-                    <div class="subheader mb-2">학수번호</div>
-                    <div class="mb-3">
-                        <input placeholder="학수번호를 입력하세요">
-                    </div>
-                    <div class="subheader mb-2"> 영역 </div>
-                    <div class="mb-3">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="business">
-                            <span class="form-check-label">전공 필수</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="evening">
-                            <span class="form-check-label">전공 선택</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
-                            <span class="form-check-label">교양 필수</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
-                            <span class="form-check-label">일반 교양</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="form-tags[]" value="party">
-                            <span class="form-check-label">핵심 교양</span>
-                        </label>
+                    <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                        <li class="nav-item">
+                            <a href="#tabs-name" :class="{ active: tabId === 'tabs-name' }" class="nav-link"
+                                @click="handleTabClick('tabs-name')" data-bs-toggle="tab">&nbsp;&nbsp;강의명&nbsp;&nbsp;</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tabs-code" :class="{ active: tabId === 'tabs-code' }" class="nav-link"
+                                @click="handleTabClick('tabs-code')" data-bs-toggle="tab">학수번호</a>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane" :class="{ active: tabId === 'tabs-name' }">
+                                <div class="subheader mb-2">강의명</div>
+                                <div class="mb-3">
+                                    <input v-model="searchOption.courseName" placeholder="강의명을 입력하세요">
+                                </div>
+                                <div class="subheader mb-2"> 영역 </div>
+                                <div class="mb-3">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isMajorEssential" name="form-tags[]" value="business">
+                                        <span class="form-check-label">전공 필수</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isMajorSelective" name="form-tags[]" value="evening">
+                                        <span class="form-check-label">전공 선택</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralEssential" name="form-tags[]" value="party">
+                                        <span class="form-check-label">교양 필수</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralSelective" name="form-tags[]" value="party">
+                                        <span class="form-check-label">교양 선택</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralCore" name="form-tags[]" value="party">
+                                        <span class="form-check-label">핵심 교양</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="tab-pane" :class="{ active: tabId === 'tabs-code' }">
+                                <div class="subheader mb-2">학수번호</div>
+                                <div class="mb-3">
+                                    <input v-model="searchOption.courseCode" placeholder="학수번호를 입력하세요">
+                                </div>
+                                <div class="subheader mb-2"> 영역 </div>
+                                <div class="mb-3">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isMajorEssential" name="form-tags[]" value="business">
+                                        <span class="form-check-label">전공 필수</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isMajorSelective" name="form-tags[]" value="evening">
+                                        <span class="form-check-label">전공 선택</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralEssential" name="form-tags[]" value="party">
+                                        <span class="form-check-label">교양 필수</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralSelective" name="form-tags[]" value="party">
+                                        <span class="form-check-label">교양 선택</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input"
+                                            v-model="searchOption.isGeneralCore" name="form-tags[]" value="party">
+                                        <span class="form-check-label">핵심 교양</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+
                     <div class="mt-5">
-                        <button class="btn btn-primary w-100">
+                        <a @click="searchData" class="btn btn-primary w-100">
                             검색
-                        </button>
-                        <a href="#" class="btn btn-link w-100">
+                        </a>
+                        <a class="btn btn-link w-100">
                             초기화
                         </a>
                     </div>
@@ -118,7 +170,7 @@
                                     <th>과목명</th>
                                     <th>영역</th>
                                     <th>학점</th>
-                                    <th>이수학기</th>
+                                    <th>이수학년</th>
                                     <th class="w-1"></th>
                                 </tr>
                             </thead>
@@ -126,7 +178,7 @@
                                 <tr v-for="(item, index) in MyBucketList" :key="index">
                                     <td>{{ item.hak }}</td>
                                     <td @click="toggleModal(index, item, 'update')"><a class="text-ellipsis-project">{{
-            item.name }}</a></td>
+                                        item.name }}</a></td>
                                     <td>{{ item.code }}</td>
                                     <td>{{ item.myGrade }}</td>
                                     <td>{{ item.myYear }}</td>
@@ -195,7 +247,7 @@
                                         <th>과목명</th>
                                         <th>영역</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
                                     </tr>
                                 </thead>
@@ -205,7 +257,7 @@
                                     <tr v-for="(item, index) in unTakeList" :key="index">
                                         <td>{{ item.hak }}</td>
                                         <td><a class="text-ellipsis-project" @click="toggleModal(index, item, 'add')">{{
-            item.name }}</a>
+                                            item.name }}</a>
                                         </td>
                                         <td>{{ item.code }}</td>
                                         <td>{{ item.grade }}</td>
@@ -220,7 +272,7 @@
                                         <th>학수번호</th>
                                         <th>과목명</th>
                                         <th>학점</th>
-                                        <th>이수학기</th>
+                                        <th>이수학년</th>
                                         <th>수강인원</th>
                                     </tr>
                                 </thead>
@@ -807,24 +859,34 @@ import TakeBuket from './component/TakeBuket.vue'
 
 
 export default {
-    inject:['$axios'],
+    inject: ['$axios'],
     components: {
         TakeBuket: TakeBuket,
     },
     data() {
         return {
+            apiurl: '/v1/courses',
+            userId: localStorage.getItem('memberId'),
+            searchOption: {
+                courseName: '',
+                courseCode: '',
+                isMajorEssential: false,
+                isMajorSelective: false,
+                isGeneralEssential: false,
+                isGeneralSelective: false,
+                isGeneralCore: false,
+            },
             modalType: 'add',
-            onLoading:false,  // 데이터를 가져오면 onloading의 값이 false가 된다.
+            onLoading: false,  // 데이터를 가져오면 onloading의 값이 false가 된다.
             isSidebarOpen: false,
             isContentClass1: true,
 
             showShortTable: true,
             showLongTable: false,
             // 조회해서 가져올 데이터
-            unTakeList: [],
-            searchOptions: { // 검색 옵션 객체
 
-            },
+            tabId: "tabs-name",
+            unTakeList: [],
             MyBucketList: [],
             courseData: {}, // 신청 컴포넌트에 들어갈 DATA
 
@@ -835,36 +897,63 @@ export default {
         this.fetchData();
     },
     methods: {
+        handleTabClick(tabId) {
+            this.tabId = tabId;
+        },
+        searchData() {
+            console.log(this.searchOption, "test");
+            this.onLoading = true;
+            this.$axios.post(`${this.apiurl}/untake/search`, this.searchOption
+                , {
+                    params: {
+                        memberId: this.userId
+                    }
+                }).then((res) => {
+                    const resList = res.data.result.untakenCourseDTOList;
+                    this.unTakeList = resList.map(item => ({
+                        hak: item.courseCode, // 학수번호
+                        courseId: item.courseId,
+                        name: item.courseName, // 과목명
+                        code: item.categoryName, // 영역
+                        grade: item.credit, // 학점
+                        year: item.level, // 이수학기
+                        people: item.takenNumber // 수강인원
+                    }));
+                    this.onLoading = false
+                }).catch((err) => {
+                    console.log(err)
+                })
+        },
         fetchData() { // 데이터를 가져오는 함수
             this.onLoading = true;
             console.log('fetchData 호출됨'); // 로그 추가
-            const userId=localStorage.getItem('memberId');
-            this.$axios.get('/v1/courses/untake', {
+
+            this.$axios.get(`${this.apiurl}/untake`, {
                 params: {
-                    memberId: userId // TODO : 실제 사용자 ID로 변경
+                    memberId: this.userId // TODO : 실제 사용자 ID로 변경
                 }
             })
-            .then(response => { 
-                console.log('응답 받음:', response.data);
-                const responseList = response.data.result.untakenCourseDTOList;
-                this.unTakeList = responseList.map(item => ({
-                    hak: item.courseCode, // 학수번호
-                    courseId: item.courseId,
-                    name: item.courseName, // 과목명
-                    code: item.categoryName, // 영역
-                    grade: item.credit, // 학점
-                    year: item.level, // 이수학기
-                    people: item.takenNumber // 수강인원
-                }));
-                console.log("here", this.unTakeList);
-            })
-            .catch(error => {
-                console.error('오류 발생1:', error); // 오류 로그 추가
-                this.$swal("로그인을 해주세요.", '', "error");
-            })
-            .finally(() => {
-                this.onLoading = false;
-            });
+                .then(response => {
+                    console.log('응답 받음:', response.data);
+                    const responseList = response.data.result.untakenCourseDTOList;
+                    this.unTakeList = responseList.map(item => ({
+                        hak: item.courseCode, // 학수번호
+                        courseId: item.courseId,
+                        name: item.courseName, // 과목명
+                        code: item.categoryName, // 영역
+                        grade: item.credit, // 학점
+                        year: item.level, // 이수학기
+                        people: item.takenNumber // 수강인원
+                    }));
+                    console.log("here", this.unTakeList);
+                })
+                .catch(error => {
+                    console.error('오류 발생1:', error); // 오류 로그 추가
+                    this.$swal("로그인을 해주세요.", '', "error");
+                })
+                .finally(() => {
+                    this.onLoading = false;
+                });
         },
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;
@@ -884,9 +973,9 @@ export default {
             this.showShortTable = !this.showShortTable;
         },
         AddTake() {
-        // MyBucketList를 CreateTakeDTO 형식으로 변환
-            const userId=localStorage.getItem('memberId');
-        const createTakeDTOList = this.MyBucketList.map(item => {
+            // MyBucketList를 CreateTakeDTO 형식으로 변환
+            const userId = localStorage.getItem('memberId');
+            const createTakeDTOList = this.MyBucketList.map(item => {
                 return {
                     courseId: Number(item.courseId), // 실제 데이터에서 적절한 필드를 매핑하세요
                     takenTerm: Number(item.myYear), // 이수학기
@@ -895,43 +984,43 @@ export default {
                 };
             });
 
-        // CreateTakeListDTO 형식으로 데이터 래핑
-        const requestData = {
-            createTakeDTOList: createTakeDTOList
-        };
+            // CreateTakeListDTO 형식으로 데이터 래핑
+            const requestData = {
+                createTakeDTOList: createTakeDTOList
+            };
 
-        this.$axios.post('/v1/courses/take/new', requestData, {
-            params: {
-                memberId: userId // TODO: 실제 사용자 ID로 변경
-            }
-        })
-        .then(response => {
-            console.log('응답 받음:', response.data); 
-            this.$swal("이수내역 추가완료", '', 'success')
-                .then((val) => {
-                    if (val.isConfirmed) {
-                        this.$router.push('/MyTake');
-                    }
+            this.$axios.post('/v1/courses/take/new', requestData, {
+                params: {
+                    memberId: userId // TODO: 실제 사용자 ID로 변경
+                }
+            })
+                .then(response => {
+                    console.log('응답 받음:', response.data);
+                    this.$swal("이수내역 추가완료", '', 'success')
+                        .then((val) => {
+                            if (val.isConfirmed) {
+                                this.$router.push('/MyTake');
+                            }
+                        });
+                })
+                .catch(error => {
+                    console.error('오류 발생2:', error);
+                    this.$swal("이수내역 추가에 실패했습니다.", '', "error");
                 });
-        })
-        .catch(error => {
-            console.error('오류 발생2:', error); 
-            this.$swal("이수내역 추가에 실패했습니다.", '', "error");
-        });
-    }
-,
+        }
+        ,
         addItem(item) { // 장바구니에 추가하는 함수
             const addItem = item;
             this.MyBucketList.push(addItem)
             this.MyBucketList.forEach((item, index) => {
-            console.log(`Item ${index + 1}:`);
-            console.log(`  courseId: ${item.courseId}`);
-            console.log(`  hak: ${item.hak}`);
-            console.log(`  name: ${item.name}`);
-            console.log(`  code: ${item.code}`);
-            console.log(`  myGrade: ${item.myGrade}`);
-            console.log(`  myYear: ${item.myYear}`);
-        });
+                console.log(`Item ${index + 1}:`);
+                console.log(`  courseId: ${item.courseId}`);
+                console.log(`  hak: ${item.hak}`);
+                console.log(`  name: ${item.name}`);
+                console.log(`  code: ${item.code}`);
+                console.log(`  myGrade: ${item.myGrade}`);
+                console.log(`  myYear: ${item.myYear}`);
+            });
 
             this.$refs.updateModalComponent.closeModal();
             this.$swal("장바구니 추가완료", '', "success");

@@ -48,6 +48,7 @@
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-all' }">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
+                                
                             </div>
                             <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
                                 삭제
@@ -73,6 +74,7 @@
                                         <th>학점</th>
                                         <th>이수학기</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,6 +87,7 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+                                            <td @click="toggleModal(key, item, 'update')"><a class="text-ellipsis-project">수정</a></td>
                                         </tr>
                                     </template>
                                     <template v-else>
@@ -124,6 +127,7 @@
                                         <th>학점</th>
                                         <th>이수학기</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -184,6 +188,7 @@
                                         <th>학점</th>
                                         <th>이수학기</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,6 +249,7 @@
                                         <th>학점</th>
                                         <th>이수학기</th>
                                         <th>수강인원</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -304,6 +310,8 @@
                                         <th>학점</th>
                                         <th>이수학기</th>
                                         <th>수강인원</th>
+                                        <th></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -339,12 +347,21 @@
                 </div>
             </div>
         </div>
+
+        <TakeBuket ref="updateModalComponent" :modalType="modalType" :courseData="courseData" :updateItem="updateItem"
+            :addItem="addItem"></TakeBuket>
     </div>
+    
 </template>
 
 <script>
+import TakeBuket from './component/TakeBuket.vue'
+
 export default {
     inject: ['$axios'],
+    components: {
+        TakeBuket: TakeBuket,
+    },
     data() {
         return {
             dataList: {
@@ -469,6 +486,29 @@ export default {
                     console.error('삭제 실패:', error);
                     alert('삭제 실패');
                 });
+        },
+        toggleSidebar() {
+            this.isSidebarOpen = !this.isSidebarOpen;
+            this.isContentClass1 = !this.isContentClass1;
+        },
+        toggleModal(key, item, type) { // 장바구니 모달 여는 함수
+            this.courseData = item;
+            if (type === 'update') {
+                this.modalType = key
+            } else {
+                this.modalType = type;
+            }
+            this.$refs.updateModalComponent.clickModal();
+        },
+        toggleTable() { // 테이블 접기 늘리기
+            this.showLongTable = !this.showLongTable;
+            this.showShortTable = !this.showShortTable;
+        },
+        updateItem(idx, item) { // 장바구니에 추가하는 함수
+            const addItem = item;
+            this.MyBucketList.with(idx, addItem)
+            this.$refs.updateModalComponent.closeModal();
+            this.$swal("수정완료", '', "success");
         }
     },
     mounted() {

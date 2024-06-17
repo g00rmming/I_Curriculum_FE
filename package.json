@@ -22,7 +22,8 @@
     "vue3-apexcharts": "^1.5.3",
     "vuex": "^4.0.2",
     "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
