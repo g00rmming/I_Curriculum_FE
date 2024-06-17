@@ -128,7 +128,7 @@
                       <path d="M14 7l7 0l0 7" />
                     </svg>
                   </span>
-                  <span v-else-if="memberData.totalGradeIncrese === 0"
+                  <span v-else-if="memberData.totalGradeIncrese == 0.00"
                     class="text-yellow d-inline-flex align-items-center lh-1">
                     변함 없음
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24"
@@ -185,7 +185,7 @@
                       <path d="M14 7l7 0l0 7" />
                     </svg>
                   </span>
-                  <span v-else-if="memberData.MajorGradeIncrese === 0"
+                  <span v-else-if="memberData.MajorGradeIncrese == 0.00"
                     class="text-yellow d-inline-flex align-items-center lh-1">
                     변함 없음
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24"
