@@ -1,13 +1,18 @@
 import axios from 'axios';
+import router from '../../router/index';
 
+
+const refreshInstance = axios.create({
+    timeout: 30000
+});
 // 타임아웃 30초
 axios.defaults.timeout = 30000;
 axios.interceptors.request.use(config => {
-     // 토큰을 가져와서 Authorization 헤더에 추가
-     const token = localStorage.getItem('authorization');
-     if (token) {
-       config.headers.Authorization = `${token}`;
-     }
+    // 토큰을 가져와서 Authorization 헤더에 추가
+    const token = localStorage.getItem('authorization');
+    if (token) {
+        config.headers.Authorization = `${token}`;
+    }
     console.log("요청 전 ", config.url);
     return config;
 }, error => {
@@ -17,19 +22,54 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
     console.log("응답이완료 ", response.config.url);
     return response;
-}, async (error) => {
+}, (error) => {
     // 프로그램 방식으로 컴포넌트 호출
-    if(error.response.status===401) {
+    if (error.response.status === 401) {
         alert(error.response.status)
         return Promise.reject(error);
     }
-    if(error.response.status===400){
+    if (error.response.status === 400) {
         // 로그인 access 토큰이 만료 되었을때
-        return Promise.reject(error); 
+        try {
+            refreshInstance.post('/reissue', {
+                params: {},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }).then((res) => {
+                localStorage.setItem('authorization', res.headers.authorization);
+                error.config.headers.Authorization = `${res.headers.authorization}`;
+                window.location.reload()
+                return axios(error.config); // 원래 요청 재시도
+            })
+
+        } catch (error1) {
+            console.log(error1);
+            return Promise.reject(error1);
+        }
+
     }
-    if(error.response.status===406){
+    if (error.response.status === 406) {
         // refresh token 만료
-        return Promise.reject(error); 
+        try {
+            alert("시간이 만료 되었습니다. 다시 로그인 해주세요");
+            refreshInstance.post('/logout', {
+                params: {},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }).then(() => {
+                localStorage.removeItem("authorization");
+                localStorage.removeItem("isAuthenticated");
+                localStorage.removeItem("memberId");
+                router.push('/')
+            })
+        } catch {
+            return Promise.reject(error);
+        }
+
     }
     // return Promise.reject(error);
 });

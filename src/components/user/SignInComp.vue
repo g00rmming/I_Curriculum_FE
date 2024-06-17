@@ -13,8 +13,8 @@
           <h2 class="h3 text-center mb-4">로그인 후 사용하세요</h2>
           <form action="./" method="get" autocomplete="off" novalidate>
             <div class="mb-3">
-              <label class="form-label">아이디( ID or Email)</label>
-              <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off"
+              <label class="form-label">아이디(ID)</label>
+              <input type="email" class="form-control" placeholder="your Id" autocomplete="off"
                 v-model="loginInfo.email" />
             </div>
             <div class="mb-2">
@@ -75,6 +75,8 @@ export default {
           localStorage.removeItem("authorization");
           localStorage.removeItem("isAuthenticated");
           localStorage.removeItem("memberId");
+          localStorage.removeItem("nickname");
+          localStorage.removeItem("department_name");
   },
   methods: {
     userValidation() {
@@ -93,12 +95,10 @@ export default {
           }
         }
         ).then((res) => {
-
-
           // // 토큰을 LocalStorage에 저장
           // localStorage.setItem("authorization", res.headers.authorization);
           // localStorage.setItem("isAuthenticated", true);
-          // localStorage.setItem("memberId", res.data.memberId);
+          
           this.$store.dispatch('login', { token: res.headers.authorization, memberId: res.data.memberId, password: this.loginInfo.password });
           // this.$store.commit('setUser', { username: res.data.memberId });
 
@@ -111,16 +111,16 @@ export default {
           // console.log(cookie,'seok'); //testValue
 
           // 멤버 정보를 가져오기
-          // this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`, {
-          //   'Content-Type': 'application/json',
-          //   'Accept': 'application/json',
-          //   'Authorization': `${res.headers.authorization}`,
-          // })
-          //   .then((res1) => {
-          //     console.log(res1, "test")
-          //   })
-          
-          this.$router.push({ name: 'dashboard' });
+          this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`, {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${res.headers.authorization}`,
+          }).then((res1) => {
+              console.log(res1, "test")
+              localStorage.setItem("nickname", res1.data.result.nickname);
+              localStorage.setItem("department_name", res1.data.result.department_name);
+              this.$router.push({ name: 'dashboard' });
+            })     
         })
           .catch((err1) => {
             console.log(err1);
