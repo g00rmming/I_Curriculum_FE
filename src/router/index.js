@@ -62,7 +62,21 @@ const defaultRoutes = [
     name: 'Mytake',
     component: () => import('../views/coursemangent/MyTake.vue'),
     beforeEnter: guardMyroute
+  },
+  {
+    path: '/CurriculumDiagram',
+    name: 'CurriculumDiagramPage',
+    component: () => import('../views/mypage/CurriculumDiagram.vue'),
+    beforeEnter: guardMyroute
   }
+  ,
+  {
+    path: '/CurriculumTable',
+    name: 'CurriculumTablePage',
+    component: () => import('../views/mypage/CurriculumTable.vue'),
+    beforeEnter: guardMyroute
+  }
+  ,
 ]
 
 
