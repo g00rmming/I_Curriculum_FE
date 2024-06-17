@@ -212,15 +212,6 @@
 
         </div>
       </div>
-      <div>
-        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary">AI에게 수강과목을 바탕으로 진로 추천받기</button>
-        <div v-if="promptResponse">
-          <h3>응답 결과:</h3>
-          <div class="response-card">
-            <p style="text-align: left;" v-html="formatResponse(promptResponse)"></p>
-          </div>
-        </div>
-      </div>
       <!--  영역 끝-->
       <ResourceAllocation :majorList="majorList" 
       :generalList="generalList" 
@@ -243,6 +234,18 @@
       :standardCredit="memberData.standardCredit"
       >
     </ResourceAllocation>
+
+    <div>
+        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary">AI에게 수강과목을 바탕으로 진로 추천받기</button>
+        <div v-if="promptResponse">
+          <h3>응답 결과:</h3>
+          <div class="response-card">
+            <p style="text-align: left;" v-html="formatResponse(promptResponse)"></p>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
   </div>
 </template>
