@@ -838,9 +838,10 @@ export default {
         fetchData() { // 데이터를 가져오는 함수
             this.onLoading = true;
             console.log('fetchData 호출됨'); // 로그 추가
+            const userId=localStorage.getItem('memberId');
             this.$axios.get('/v1/courses/untake', {
                 params: {
-                    memberId: 1 // TODO : 실제 사용자 ID로 변경
+                    memberId: userId // TODO : 실제 사용자 ID로 변경
                 }
             })
             .then(response => { 
@@ -884,6 +885,7 @@ export default {
         },
         AddTake() {
         // MyBucketList를 CreateTakeDTO 형식으로 변환
+            const userId=localStorage.getItem('memberId');
         const createTakeDTOList = this.MyBucketList.map(item => {
                 return {
                     courseId: Number(item.courseId), // 실제 데이터에서 적절한 필드를 매핑하세요
@@ -900,7 +902,7 @@ export default {
 
         this.$axios.post('/v1/courses/take/new', requestData, {
             params: {
-                memberId: 1 // TODO: 실제 사용자 ID로 변경
+                memberId: userId // TODO: 실제 사용자 ID로 변경
             }
         })
         .then(response => {

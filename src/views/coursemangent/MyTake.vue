@@ -33,11 +33,11 @@
                         <a href="#tabs-4" :class="{ active: tabId === 'tabs-4' }" class="nav-link" @click="handleTabClick('tabs-4')" data-bs-toggle="tab">4학년</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">학기</a>
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ semesterLabel }}</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">전체</a>
-                            <a class="dropdown-item" href="#">1학기</a>
-                            <a class="dropdown-item" href="#">2학기</a>
+                            <a class="dropdown-item" href="#" @click="handleSemesterClick(null)">전체</a>
+                            <a class="dropdown-item" href="#" @click="handleSemesterClick(1)">1학기</a>
+                            <a class="dropdown-item" href="#" @click="handleSemesterClick(2)">2학기</a>
                         </div>
                     </li>
                 </ul>
@@ -48,7 +48,6 @@
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-all' }">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-
                             </div>
                             <a href="#" class="btn btn-pill" style="padding: 0.3rem;">
                                 삭제
@@ -77,15 +76,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in dataList.all" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
+                                    <template v-if="filteredDataList.all.length">
+                                        <tr v-for="item in filteredDataList.all" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td colspan="7" class="text-center">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -114,24 +120,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in dataList['1']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
-                                    <tr v-for="item in dataList['2']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
+                                    <template v-if="filteredDataList['1'].length || filteredDataList['2'].length">
+                                        <tr v-for="item in filteredDataList['1']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                        <tr v-for="item in filteredDataList['2']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td colspan="7" class="text-center">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -160,24 +173,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in dataList['3']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
-                                    <tr v-for="item in dataList['4']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
+                                    <template v-if="filteredDataList['3'].length || filteredDataList['4'].length">
+                                        <tr v-for="item in filteredDataList['3']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                        <tr v-for="item in filteredDataList['4']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td colspan="7" class="text-center">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -206,24 +226,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in dataList['5']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
-                                    <tr v-for="item in dataList['6']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
+                                    <template v-if="filteredDataList['5'].length || filteredDataList['6'].length">
+                                        <tr v-for="item in filteredDataList['5']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                        <tr v-for="item in filteredDataList['6']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td colspan="7" class="text-center">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -252,24 +279,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="item in dataList['7']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
-                                    <tr v-for="item in dataList['8']" :key="item.takeId">
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ item.courseCode }}</td>
-                                        <td>{{ item.courseName }}</td>
-                                        <td>{{ item.categoryName }}</td>
-                                        <td>{{ item.credit }}</td>
-                                        <td>{{ item.takenLevel }}</td>
-                                        <td>{{ item.people }}</td>
-                                    </tr>
+                                    <template v-if="filteredDataList['7'].length || filteredDataList['8'].length">
+                                        <tr v-for="item in filteredDataList['7']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                        <tr v-for="item in filteredDataList['8']" :key="item.takeId">
+                                            <td><input type="checkbox"></td>
+                                            <td>{{ item.courseCode }}</td>
+                                            <td>{{ item.courseName }}</td>
+                                            <td>{{ item.categoryName }}</td>
+                                            <td>{{ item.credit }}</td>
+                                            <td>{{ item.takenLevel }}</td>
+                                            <td>{{ item.people }}</td>
+                                        </tr>
+                                    </template>
+                                    <template v-else>
+                                        <tr>
+                                            <td colspan="7" class="text-center">조회된 데이터가 없습니다.</td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -281,11 +315,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-
-
 export default {
-    
+    inject: ['$axios'],
     data() {
         return {
             dataList: {
@@ -294,18 +325,60 @@ export default {
                 '2': [],
                 '3': [],
                 '4': [],
+                '5': [],
+                '6': [],
+                '7': [],
+                '8': [],
             },
-            tabId: "tabs-all"
+            filteredDataList: {
+                'all': [],
+                '1': [],
+                '2': [],
+                '3': [],
+                '4': [],
+                '5': [],
+                '6': [],
+                '7': [],
+                '8': [],
+            },
+            tabId: "tabs-all",
+            semester: null,
+            semesterLabel: "학기", // Add this line
         }
     },
     methods: {
         handleTabClick(tabId) {
             this.tabId = tabId;
+            this.semester = null;
+            this.semesterLabel = "학기"; // Reset the semester label when switching tabs
+            this.updateFilteredDataList();
+            this.handleSemesterClick(null);
+        },
+        handleSemesterClick(semester) {
+            this.semester = semester;
+            this.semesterLabel = semester === null ? "전체" : `${semester}학기`; // Update the semester label
+            this.updateFilteredDataList();
+        },
+        updateFilteredDataList() {
+            const year = this.tabId === 'tabs-all' ? null : this.tabId.split('-')[1];
+            if (year === null) {
+                this.filteredDataList = { ...this.dataList };
+            } else {
+                const yearGroup = parseInt(year) * 2;
+                if (this.semester === null) {
+                    this.filteredDataList[yearGroup - 1] = this.dataList[yearGroup - 1];
+                    this.filteredDataList[yearGroup] = this.dataList[yearGroup];
+                } else {
+                    this.filteredDataList[yearGroup - 1] = this.semester === 1 ? this.dataList[yearGroup - 1] : [];
+                    this.filteredDataList[yearGroup] = this.semester === 2 ? this.dataList[yearGroup] : [];
+                }
+            }
         },
         fetchData() {
-            axios.get('/v1/courses/take', {
+            const userId = localStorage.getItem('memberId');
+            this.$axios.get('/v1/courses/take', {
                 params: {
-                    memberId: 1 // 실제 사용자 ID로 변경
+                    memberId: userId // 실제 사용자 ID로 변경
                 }
             })
             .then(response => {
@@ -314,16 +387,10 @@ export default {
                 if (Array.isArray(responseList)) {
                     this.dataList.all = responseList;
                     this.loadAllTabsData();
+                    this.updateFilteredDataList();
                 } else {
                     console.error('받은 데이터가 배열이 아닙니다:', responseList);
                 }
-        console.log("here");
-        this.dataList['1'].forEach((item, index) => {
-            console.log(`Item ${index + 1}:`);
-            console.log(`  courseId: ${item.courseId}`);
-            console.log(`  hak: ${item.hak}`);
-            console.log(`  name: ${item.name}`);
-        });
             })
             .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
@@ -338,6 +405,7 @@ export default {
             this.dataList['6'] = this.filterDataByYear(6);
             this.dataList['7'] = this.filterDataByYear(7);
             this.dataList['8'] = this.filterDataByYear(8);
+            this.updateFilteredDataList();
         },
         filterDataByYear(year) {
             return this.dataList.all.filter(item => item.takenLevel === year);
@@ -345,6 +413,7 @@ export default {
     },
     mounted() {
         this.fetchData(); // 컴포넌트가 마운트될 때 데이터 가져오기
+        this.handleSemesterClick(null);
     }
 }
 </script>
