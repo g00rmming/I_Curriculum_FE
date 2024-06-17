@@ -25,15 +25,16 @@ function setLogo(b) {
 
 
 //소숫점 생성
-function setComma(){
-  
+function setComma() {
+
 }
 
 // 플러그인 생성
 const setLogoPlugin = {
   install(app) {
     app.config.globalProperties.$setLogo = setLogo;
-    app.config.globalProperties.$setComma =setComma;
+    app.config.globalProperties.$setComma = setComma;
+    
   }
 };
 
@@ -50,4 +51,3 @@ createApp(App)
   .provide('$axios', httpApi) // 전역으로 axios인스턴스를 제공
   .component('apexchart', VueApexCharts)
   .mount('#app');
-  
