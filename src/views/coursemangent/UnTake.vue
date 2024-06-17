@@ -859,8 +859,8 @@ export default {
                 console.log("here", this.unTakeList);
             })
             .catch(error => {
-                console.error('오류 발생:', error); // 오류 로그 추가
-                this.$swal("데이터를 가져오는데 실패했습니다.", '', "error");
+                console.error('오류 발생1:', error); // 오류 로그 추가
+                this.$swal("로그인을 해주세요.", '', "error");
             })
             .finally(() => {
                 this.onLoading = false;
@@ -915,7 +915,7 @@ export default {
                 });
         })
         .catch(error => {
-            console.error('오류 발생:', error); 
+            console.error('오류 발생2:', error); 
             this.$swal("이수내역 추가에 실패했습니다.", '', "error");
         });
     }

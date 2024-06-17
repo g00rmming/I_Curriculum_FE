@@ -49,7 +49,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                             </div>
-                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;">
+                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
                                 삭제
                             </a>
                         </div>
@@ -78,7 +78,7 @@
                                 <tbody>
                                     <template v-if="filteredDataList.all.length">
                                         <tr v-for="item in filteredDataList.all" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -97,6 +97,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-1' }">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                            </div>
+                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
+                                삭제
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter">
                                 <thead>
@@ -122,7 +129,7 @@
                                 <tbody>
                                     <template v-if="filteredDataList['1'].length || filteredDataList['2'].length">
                                         <tr v-for="item in filteredDataList['1']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -131,7 +138,7 @@
                                             <td>{{ item.people }}</td>
                                         </tr>
                                         <tr v-for="item in filteredDataList['2']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -150,6 +157,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-2' }">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                            </div>
+                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
+                                삭제
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter">
                                 <thead>
@@ -175,7 +189,7 @@
                                 <tbody>
                                     <template v-if="filteredDataList['3'].length || filteredDataList['4'].length">
                                         <tr v-for="item in filteredDataList['3']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -184,7 +198,7 @@
                                             <td>{{ item.people }}</td>
                                         </tr>
                                         <tr v-for="item in filteredDataList['4']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -203,6 +217,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-3' }">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                            </div>
+                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
+                                삭제
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter">
                                 <thead>
@@ -228,7 +249,7 @@
                                 <tbody>
                                     <template v-if="filteredDataList['5'].length || filteredDataList['6'].length">
                                         <tr v-for="item in filteredDataList['5']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -237,7 +258,7 @@
                                             <td>{{ item.people }}</td>
                                         </tr>
                                         <tr v-for="item in filteredDataList['6']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -256,6 +277,13 @@
                         </div>
                     </div>
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-4' }">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                            </div>
+                            <a href="#" class="btn btn-pill" style="padding: 0.3rem;" @click="confirmDelete">
+                                삭제
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter">
                                 <thead>
@@ -281,7 +309,7 @@
                                 <tbody>
                                     <template v-if="filteredDataList['7'].length || filteredDataList['8'].length">
                                         <tr v-for="item in filteredDataList['7']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -290,7 +318,7 @@
                                             <td>{{ item.people }}</td>
                                         </tr>
                                         <tr v-for="item in filteredDataList['8']" :key="item.takeId">
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
                                             <td>{{ item.courseCode }}</td>
                                             <td>{{ item.courseName }}</td>
                                             <td>{{ item.categoryName }}</td>
@@ -341,6 +369,7 @@ export default {
                 '7': [],
                 '8': [],
             },
+            selectedItems: [], // 추가된 부분
             tabId: "tabs-all",
             semester: null,
             semesterLabel: "학기", // Add this line
@@ -394,6 +423,7 @@ export default {
             })
             .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
+                this.$swal("로그인을 해주세요.", '', "error");
             });
         },
         loadAllTabsData() {
@@ -409,6 +439,36 @@ export default {
         },
         filterDataByYear(year) {
             return this.dataList.all.filter(item => item.takenLevel === year);
+        },
+        confirmDelete() {
+            if (this.selectedItems.length === 0) {
+                alert('삭제할 항목을 선택하세요.');
+                return;
+            }
+            if (confirm("정말 삭제하시겠습니까?")) {
+                this.deleteSelectedItems();
+            }
+        },
+
+        deleteSelectedItems() {
+            if (this.selectedItems.length === 0) {
+                alert('삭제할 항목을 선택하세요.');
+                return;
+            }
+            const promises = this.selectedItems.map(takeId => {
+                return this.$axios.delete(`/v1/courses/take/${takeId}`);
+            });
+
+            Promise.all(promises)
+                .then(() => {
+                    alert('삭제 성공');
+                    this.fetchData();
+                    this.selectedItems = []; // 선택 항목 초기화
+                })
+                .catch(error => {
+                    console.error('삭제 실패:', error);
+                    alert('삭제 실패');
+                });
         }
     },
     mounted() {
