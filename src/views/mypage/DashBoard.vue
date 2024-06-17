@@ -119,7 +119,7 @@
       </ResourceAllocation>
       <div>
         <input v-model="userInput" type="text" placeholder="희망 직종을 입력하세요. ex) 백엔드 개발자" class="form-control mb-3" />
-        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary mb-3">AI에게 수강과목을 바탕으로 진로 추천받기</button>
+        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary mb-3">AI에게 수강과목을 바탕으로 과목 추천받기</button>
         <div v-if="loading">
           <h1>Loading<span class="animated-dots"></span></h1>
         </div>
@@ -312,7 +312,7 @@ export default {
       this.loading = true;
       this.generateTakeString();
       this.generateUnTakeString();
-      this.prompt = `내가 ${this.userInput}이/가 되고싶은데 현재 수강한 과목들은 ${this.takeString}이고 미수강 과목들은 ${this.unTakeString}인데 어떤 과목을 들으면 좋을까? 미수강 과목들에서 과목명 그대로 5개만 추천해줘.`;
+      this.prompt = `내가 ${this.userInput}이/가 되고싶은데 현재 수강한 과목들은 {${this.takeString}}이고 미수강 과목들은 {${this.unTakeString}|인데 어떤 과목을 들으면 좋을까? 수강과목들을 제외한 미수강 과목들에서 과목명 그대로 5개만 추천해줘.`;
       console.log("dong1", this.prompt);
       this.askToAi();
       this.buttonVisible = false;
@@ -326,3 +326,84 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.page-link {
+  min-width: 0 !important;
+}
+
+.date-picker-cost {
+  justify-content: end;
+}
+
+.cost-card-header {
+  justify-content: end;
+}
+
+.cost-btn-group {
+  padding-right: 0.5rem !important;
+  justify-content: end;
+  box-shadow: none;
+}
+
+
+@media (max-width: 767px) {
+  .date-picker-cost {
+    margin-top: 0.5rem;
+    justify-content: start;
+    width: 100%;
+  }
+
+  .date-picker-cost .el-date-editor {
+    width: 100%;
+    display: flex;
+  }
+
+  .cost-card-header {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+
+  .date-picker-cost {
+    margin-top: 10px;
+  }
+
+  .cost-btn-group {
+    padding-right: 0 !important;
+    justify-content: start;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+}
+
+@media (max-width: 1199px) {
+  .cost-card-header {
+    flex-wrap: wrap;
+  }
+
+  .date-picker-cost {
+    margin-top: 10px;
+  }
+
+  .cost-btn-group {
+    padding-right: 0 !important;
+  }
+}
+
+.el-date-editor>.el-date-editor>.el-range-separator {
+  line-height: 16px !important;
+}
+
+.el-input__icon {
+  line-height: 16px !important;
+}
+.markdown p {
+  font-size: 1.1em;
+  white-space: pre-wrap; /* 줄바꿈을 위한 스타일 */
+  margin: 0; /* 텍스트 주변의 여백을 제거 */
+  justify-content: end;
+  text-align: left; /* 왼쪽 정렬 추가 */
+}
+
+</style>
