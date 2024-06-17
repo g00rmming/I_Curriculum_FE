@@ -48,7 +48,6 @@
                     <div class="tab-pane" :class="{ active: tabId === 'tabs-all' }">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                            
                             </div>
                             <a href="#" class="btn btn-pill" style="padding: 0.3rem;">
                                 삭제
@@ -388,16 +387,6 @@ export default {
                 if (Array.isArray(responseList)) {
                     this.dataList.all = responseList;
                     this.loadAllTabsData();
-                } else {
-                    console.error('받은 데이터가 배열이 아닙니다:', responseList);
-                }
-        console.log("here");
-        this.dataList['1'].forEach((item, index) => {
-            console.log(`Item ${index + 1}:`);
-            console.log(`  courseId: ${item.courseId}`);
-            console.log(`  hak: ${item.hak}`);
-            console.log(`  name: ${item.name}`);
-        });
                     this.updateFilteredDataList();
                 } else {
                     console.error('받은 데이터가 배열이 아닙니다:', responseList);
@@ -416,7 +405,6 @@ export default {
             this.dataList['6'] = this.filterDataByYear(6);
             this.dataList['7'] = this.filterDataByYear(7);
             this.dataList['8'] = this.filterDataByYear(8);
-
             this.updateFilteredDataList();
         },
         filterDataByYear(year) {
