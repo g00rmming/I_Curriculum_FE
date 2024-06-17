@@ -119,7 +119,7 @@
       </ResourceAllocation>
       <div>
         <input v-model="userInput" type="text" placeholder="희망 직종을 입력하세요. ex) 백엔드 개발자" class="form-control mb-3" />
-        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary mb-3">AI에게 수강과목을 바탕으로 과목 추천받기</button>
+        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary mb-3">AI에게 과목 추천받기</button>
         <div v-if="loading">
           <h1>Loading<span class="animated-dots"></span></h1>
         </div>
@@ -272,7 +272,6 @@ export default {
         
       } catch (error) {
         console.error('데이터 가져오기 실패:', error);
-        this.$swal("로그인을 해주세요.", '', "error");
       } finally {
         this.onLoading = false;
       }
@@ -309,13 +308,15 @@ export default {
     },
 
     handleClick() {
+      if (!this.userInput.trim()) {
+        this.$swal("희망 직종을 입력하세요.", '', "warning");
+        return;
+      }
       this.loading = true;
       this.generateTakeString();
       this.generateUnTakeString();
       this.prompt = `내가 ${this.userInput}이/가 되고싶은데 현재 수강한 과목들은 {${this.takeString}}이고 미수강 과목들은 {${this.unTakeString}|인데 어떤 과목을 들으면 좋을까? 수강과목들을 제외한 미수강 과목들에서 과목명 그대로 5개만 추천해줘.`;
-      console.log("dong1", this.prompt);
       this.askToAi();
-      this.buttonVisible = false;
     },
 
     calculatePercentageIncrease(initialValue, finalValue) {
