@@ -70,6 +70,13 @@ const defaultRoutes = [
     beforeEnter: guardMyroute
   }
   ,
+  {
+    path: '/CurriculumTable',
+    name: 'CurriculumTablePage',
+    component: () => import('../views/mypage/CurriculumTable.vue'),
+    beforeEnter: guardMyroute
+  }
+  ,
 ]
 
 
