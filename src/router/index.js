@@ -14,6 +14,7 @@ function guardMyroute(to, from, next) {
 }
 
 
+
 const userRoutes = [
   {
     path: '/',
@@ -94,5 +95,44 @@ const router = createRouter({
   routes,
 
 })
+
+
+
+// import httpApi from '@/utils/http';
+
+
+
+// //token 재발급
+// async function refreshToken(){
+//   try{
+//       const token = await httpApi.post('/login',{
+//         username:this.$store.getters.memberId,
+//         password:this.$store.getters.password
+//       });
+//       // VueCookies.set('token', token.headers.data.token, '60*10' );
+//       return token;
+//   }catch(err){
+//       return err;
+//   }
+// }
+
+// // 모든 라우터들이 실행될때 토큰이 유효한지 확인하고 유효하지 않다면 토근을 재발급 또는 로그아웃 함수를 실행한다.
+// router.beforeEach( async(to, from, next) => {
+
+//   if(VueCookies.get('token')===null && VueCookies.get('refresh_token') !== null){
+//     await refreshToken();
+//   }
+
+//   if (to.matched.some(record => record.meta.unauthorized) || VueCookies.get('token')){
+//     return next();
+//   }
+
+//     alert('로그인 해주세요');
+//     return next('/login');
+// })
+
+
+
+
 
 export default router

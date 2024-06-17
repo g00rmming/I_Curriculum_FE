@@ -77,8 +77,6 @@ export default {
   methods: {
     userValidation() {
       // 로그인 검증 로직 추가
-      
-      
       if (this.loginInfo.email && this.loginInfo.password) {
         // 예제에서는 간단히 조건을 체크하여 로그인 처리를 합니다.
         // 실제로는 백엔드와 통신하여 인증을 수행해야 합니다.
@@ -86,23 +84,27 @@ export default {
         const frm = new FormData()
         frm.append('username', this.loginInfo.email)
         frm.append('password', this.loginInfo.password)
-        console.log(frm, "seok");
+        
         this.$axios.post('/login', frm, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
         ).then((res) => {
-          console.log(res.headers.authorization, "seok");
-
-          // 토큰을 LocalStorage에 저장
-          localStorage.setItem("authorization", res.headers.authorization);
-          localStorage.setItem("isAuthenticated", true);
-          localStorage.setItem("memberId", res.data.memberId);
-          console.log(res);
+          // // 토큰을 LocalStorage에 저장
+          // localStorage.setItem("authorization", res.headers.authorization);
+          // localStorage.setItem("isAuthenticated", true);
+          // localStorage.setItem("memberId", res.data.memberId);
+          this.$store.dispatch('login', { token: res.headers.authorization, memberId: res.data.memberId, password: this.loginInfo.password });
           // this.$store.commit('setUser', { username: res.data.memberId });
-          console.log(localStorage)
-          
+
+          console.log(localStorage, "#########################################localstroage 검사입니다#########################################3")
+          console.log(this.$store, "#########################################store 검사입니다!!#########################################");
+
+          this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`)
+          .then((res)=>{
+              console.log(res,"test")            
+          })
           this.$router.push({ name: 'dashboard' });
         })
           .catch((err) => {

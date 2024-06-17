@@ -202,6 +202,7 @@ export default {
   methods: {
     logout() {
       // this.$store.commit("deleteSession");
+      localStorage.clear();
       this.$router.push("/signin")
     },
     toggleTheme() {

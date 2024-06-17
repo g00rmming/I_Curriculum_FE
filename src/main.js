@@ -5,6 +5,8 @@ import store from './store';
 import VueApexCharts from "vue3-apexcharts"; // 차트 사용
 import VueSweetalert2 from 'vue-sweetalert2';
 import httpApi from './utils/http';  // axios 틀작업
+import VueCookies from 'vue-cookies'
+
 
 import 'sweetalert2/dist/sweetalert2.min.css';  //swal을 사용
 
@@ -17,6 +19,10 @@ function setLogo(b) {
     return require(`@/assets/${a}-logo-blue.png`)
   }
 }
+
+
+//로그아웃 
+
 
 //소숫점 생성
 function setComma(){
@@ -40,6 +46,7 @@ createApp(App)
   .use(setLogoPlugin)
   .use(VueApexCharts)
   .use(VueSweetalert2)
+  .use(VueCookies)
   .provide('$axios', httpApi) // 전역으로 axios인스턴스를 제공
   .component('apexchart', VueApexCharts)
   .mount('#app');
