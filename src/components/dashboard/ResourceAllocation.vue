@@ -352,12 +352,12 @@ export default {
         const totalCoreBefore = this.one + this.two + this.three + this.four + this.five + this.six;
         this.generalCoreSeries = [this.one, this.two, this.three, this.four, this.five, this.six, 9 - totalCoreBefore];
         this.generalCoreChartOptions.labels = ['1영역', '2영역', '3영역', '4영역', '5영역', '6영역', '미이수'];
-        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1"];
+        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#F05650"];
       } else if (this.standardCredit === 12) {
         const totalCoreAfter = this.one + this.two + this.three + this.four + this.five + this.six + this.creative;
         this.generalCoreSeries = [this.one, this.two, this.three, this.four, this.five, this.six, this.creative, 12 - totalCoreAfter];
         this.generalCoreChartOptions.labels = ['1영역', '2영역', '3영역', '4영역', '5영역', '6영역', '창의', '미이수'];
-        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1", "#6F42C1"];
+        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1", "#F05650"];
       }
 
       this.lineChartSeries = [{
@@ -381,8 +381,8 @@ export default {
       this.generalChartOptions.plotOptions.pie.donut.labels.total.label = '교양 요구 사항 충족';
       
     } 
-     // '핵심교양 이수 학점'이 12 이상인지 확인하여 시리즈를 설정
-     if (this.standardCredit === 12 || this.standardCredit === 9) {
+     // '핵심교양 이수 학점'이 12 혹은 9 이상인지 확인하여 시리즈를 설정
+     if (this.standardCredit === 12 && this.generalCoreTakenCredit === 12 || this.standardCredit === 9 && this.generalCoreTakenCredit === 9) {
       this.generalCoreSeries = [this.standardCredit];
       this.generalCoreChartOptions.labels = ['완료'];
       this.generalCoreChartOptions.colors = ['#00E396']; // 완료 색상
