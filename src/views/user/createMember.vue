@@ -53,6 +53,35 @@
                 autocomplete="off" />
             </div>
 
+            <div class="mb-3">
+              <label class="form-label">입학년도</label>
+              <select v-model="menberInfo.joinYear" class="form-select">
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                          
+                                        </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">현재 학기</label>
+              <select v-model="menberInfo.compeleteTerm" class="form-select">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                          
+                                        </select>
+            </div>
+
             <div class="form-footer mb-2 text-center">
               <a @click="createMember()" class="btn  btn-pill btn-primary" role="button">회원가입</a>
             </div>
@@ -107,8 +136,8 @@ export default {
             password: this.menberInfo.password,
             nickname: this.menberInfo.nickname,
             department_name: this.menberInfo.department_name,
-            joinYear: 2019,
-            compeleteTerm: 4
+            joinYear: this.memberInfo.joinYear,
+            compeleteTerm: this.compeleteTerm,
           }).then((res) => {
             console.log(res);
             if (res) {
