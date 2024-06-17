@@ -85,7 +85,7 @@
 
   <RecommendComp :isVisible="modalMajorVisible" @close="modalMajorVisible = false" :RecommendDataList="majorList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralVisible" @close="modalGeneralVisible = false" :RecommendDataList="generalList"> </RecommendComp>
-  <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
+  <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreeVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
 </template>
 
 <script>
@@ -113,16 +113,20 @@ export default {
     five: Number,
     six: Number,
     creative: Number,
+    standardCredit: Number,
   },
   data() {
     return {
       modalMajorVisible: false, // 전공 모달
       modalGeneralVisible: false, // 교양 모달
       modalGeneralCoreVisible: false,//핵교 모달
+ 
+
       // 차트 데이터
       majorSeries: [], // 전공
       generalSeries: [], //교양
-      generalCoreSeries: [], //핵교
+      generalCoreSeries: [], //핵교 
+
       lineChartSeries: [], // 성적 추이 그래프
 
       gradeData: [3.2, 3.5, 3.8, 4.0], // 예시 성적 데이터
@@ -274,7 +278,7 @@ export default {
             }
           }
         }],
-        labels: ['1영역', '2영역', '3영역','4영역','5영역','6영역','창의영역'],
+        labels: ['1영역', '2영역', '3영역','4영역','5영역','6영역','미이수'],
         colors: ["#008FFB","#00E396","#FF5733","#FFC300","#900C3F","#DAF7A6","#6F42C1"],
         plotOptions: {
           pie: {
@@ -295,7 +299,7 @@ export default {
                   fontWeight: 600,
                   color: '#373d3f',
                   formatter: function (w) {
-                     w.globals.seriesTotals.reduce((a, b) => {
+                    return w.globals.seriesTotals.reduce((a, b) => {
                       return a + b
                     }, 0)
                   }
@@ -340,22 +344,22 @@ export default {
   },
   methods: {
     fetchData(){
-      console.log('Major List:', this.majorList);
-      console.log('Major List:', this.generalList);
-      console.log('General Core List:', this.generalCoreList);
-
-      console.log("전체 이수 학점: ",this.totalTakenCredit);
-      console.log("전공 이수 학점: ",this.majorTakenCredit);
-
-      console.log("교양 선택 이수 학점: ",this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit);
-      console.log("교양 필수 이수 학점",this.generalEssentialTakenCredit);
-      console.log("핵심 교양 이수 학점: ",this.generalCoreTakenCredit);
-      
       console.log("전공 필수 이수 학점: ",this.majorEssentialTakenCredit);
       this.majorSeries = [this.majorEssentialTakenCredit, this.majorTakenCredit - this.majorEssentialTakenCredit, 65 - this.majorTakenCredit];
       this.generalSeries = [this.generalEssentialTakenCredit,this.totalTakenCredit - this.majorTakenCredit - this.generalCoreTakenCredit,this.generalCoreTakenCredit,65-this.generalEssentialTakenCredit-this.totalTakenCredit+this.majorTakenCredit];
-      this.generalCoreSeries = [this.one,this.two,this.three,this.four,this.five,this.six,this.creative]; // 핵심 교양 여러개 들으면 일교로 빠지는데 일단 얼마나 이수했는지만 나타내면 좋을것 같음
-      
+     
+      if (this.standardCredit === 9) {
+        const totalCoreBefore = this.one + this.two + this.three + this.four + this.five + this.six;
+        this.generalCoreSeries = [this.one, this.two, this.three, this.four, this.five, this.six, 9 - totalCoreBefore];
+        this.generalCoreChartOptions.labels = ['1영역', '2영역', '3영역', '4영역', '5영역', '6영역', '미이수'];
+        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1"];
+      } else if (this.standardCredit === 12) {
+        const totalCoreAfter = this.one + this.two + this.three + this.four + this.five + this.six + this.creative;
+        this.generalCoreSeries = [this.one, this.two, this.three, this.four, this.five, this.six, this.creative, 12 - totalCoreAfter];
+        this.generalCoreChartOptions.labels = ['1영역', '2영역', '3영역', '4영역', '5영역', '6영역', '창의', '미이수'];
+        this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1", "#6F42C1"];
+      }
+
       this.lineChartSeries = [{
         name: "성적",
         data: this.gradeData
@@ -378,8 +382,8 @@ export default {
       
     } 
      // '핵심교양 이수 학점'이 12 이상인지 확인하여 시리즈를 설정
-     if (this.generalCoreTakenCredit>= 12) {
-      this.generalCoreSeries = [12];
+     if (this.standardCredit === 12 || this.standardCredit === 9) {
+      this.generalCoreSeries = [this.standardCredit];
       this.generalCoreChartOptions.labels = ['완료'];
       this.generalCoreChartOptions.colors = ['#00E396']; // 완료 색상
       this.generalCoreChartOptions.plotOptions.pie.donut.labels.total.label = '핵심교양 요구 사항 충족';
@@ -413,11 +417,16 @@ export default {
 
     },
     openGeneralCoreModal(){
-      if(this.generalCoreTakenCredit >=12){
-     
-     this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
-   
-   }else{
+      if(this.standardCredit ===9){
+        if(this.generalCoreTakenCredit === 9){
+          this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
+        }
+      }else if(this.standardCredit === 12){
+        if(this.generalCoreTakenCredit === 12){
+          this.$swal("이미 핵심교양 졸업 요건을 충족 했습니다.", '', "success");
+        }
+      }
+   else{
      this.modalGeneralCoreVisible = true;
    }
     },

@@ -231,7 +231,7 @@
       :five="memberData.five"
       :six="memberData.six"
       :creative="memberData.creative"
-
+      :standardCredit="memberData.standardCredit"
       >
     </ResourceAllocation>
     </div>
@@ -296,9 +296,12 @@ export default {
           five: result.generalCoreDTO.takeFive,
           six: result.generalCoreDTO.takeSix,
           creative: result.generalCoreDTO.takeCreative,
+          standardCredit : result.generalCoreDTO.standardCredit,
 
           totalGradeIncrese : this.calculatePercentageIncrease(result.previousTotalGrade,result.totalGrade),
           MajorGradeIncrese : this.calculatePercentageIncrease(result.previousMajorGrade,result.majorGrade),
+
+
 
         }
         console.log("seok",this.memberData.MajorGradeIncrese);
@@ -342,7 +345,7 @@ export default {
       const percentageIncrease = (increase / initialValue) * 100;
 
       // 결과 반환
-      return percentageIncrease;
+      return percentageIncrease.toFixed(2);
     }
 
   },
