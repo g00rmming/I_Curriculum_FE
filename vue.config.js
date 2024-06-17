@@ -30,6 +30,11 @@ module.exports = defineConfig({
     headers: { 'Access-Control-Allow-Origin': '*' },
     // 프록시 설정
     proxy: {
+      '/api': {
+        target: 'https://ek66mfbfpfa23yw5qfymhrh6ti0vnirc.lambda-url.ap-southeast-1.on.aws',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      },
       // 프록시 요청을 보낼 api의 시작 부분 
       '/v1': {
         target: `${springbootUrl}:${springport}/api`, // 프록시할 대상 서버의 주소

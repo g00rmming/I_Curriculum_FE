@@ -212,6 +212,15 @@
 
         </div>
       </div>
+      <div>
+        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary">AI에게 수강과목을 바탕으로 진로 추천받기</button>
+        <div v-if="promptResponse">
+          <h3>응답 결과:</h3>
+          <div class="response-card">
+            <p style="text-align: left;" v-html="formatResponse(promptResponse)"></p>
+          </div>
+        </div>
+      </div>
       <!--  영역 끝-->
       <ResourceAllocation :majorList="majorList" 
       :generalList="generalList" 
@@ -257,6 +266,10 @@ export default {
       majorList:{},  // 전공
       generalList:{}, // 교양 
       generalCoreList:{}, // 핵교
+      buttonVisible: true,
+      subjects : [],
+      promptResponse:"",
+      prompt : ""
     };
   },
   mounted() {
@@ -346,13 +359,68 @@ export default {
 
       // 결과 반환
       return percentageIncrease.toFixed(2);
-    }
-
-  },
-  watch: {
-
-  },
-};
+    },
+    fetchData2() {
+      const userId = localStorage.getItem('memberId');
+      this.$axios.get('/v1/courses/take', {
+        params: {
+          memberId: userId // 실제 사용자 ID로 변경
+        }})
+        .then(response => {
+          const responseList = response.data.result.takenCourseDTOList; // 서버에서 받은 데이터에 맞게 변경
+          console.log('받은 데이터:', responseList); // 받아온 데이터 로그
+          if (Array.isArray(responseList)) {
+            this.subjects = responseList;
+            this.generatePrompt();
+            this.prompt = "내가" + this.prompt + "를 들었는데 이 과목들을 기반으로 내 진로에 대해 다른 말은 하지 말고 1.??? 2.??? 3.??? 4??? 이런 형식으로 추천해서 보여줘. ";
+            this.askToAi();
+            console.log("dong", this.prompt);
+            this.subjects.forEach((item, index) => {
+              console.log(`Item ${index + 1}:`);
+              console.log(`  courseId: ${item.courseId}`);
+              console.log(`  name: ${item.courseName}`);
+            });
+          } else {
+            console.error('받은 데이터가 배열이 아닙니다:', responseList);
+          }})
+          .catch(error => {
+            console.error('데이터 가져오기 실패:', error);
+            this.$swal("로그인을 해주세요.", '', "error");
+          });
+        },
+        generatePrompt() {
+          this.prompt = this.subjects
+          .filter(subject => subject.categoryName === "전공필수" || subject.categoryName === "전공선택")
+          .map(subject => subject.courseName)
+          .join(', ');
+        },
+        askToAi() {
+          // 생성한 프롬프트 데이터를 payload로 준비
+          const payload = {
+            prompt: this.prompt
+          };
+          // API 요청 보내기
+          this.$axios.post('/api', payload)
+          .then(response => {
+            // 응답 데이터를 처리하고, output 값을 promptResponse에 저장
+            this.promptResponse = response.data.output;
+            console.log('응답 받음:', this.promptResponse);
+          })
+          .catch(error => {
+            // 오류 처리
+            console.error('오류 발생:', error);
+          });
+        },
+        handleClick() {
+          this.fetchData2();
+          this.buttonVisible = false; // 버튼을 클릭하면 사라지게 설정
+        },
+        formatResponse(response) {
+          return response.replace(/\n/g, '<br>');
+        },
+      },
+      watch: {},
+      };
 </script>
 
 <style scoped>
