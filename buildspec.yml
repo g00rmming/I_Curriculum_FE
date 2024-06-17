@@ -5,17 +5,15 @@ phases:
     runtime-versions:
       nodejs: 16 # Node.js 버전 지정
     commands:
-      - echo 의존성 설치 중...
+      - echo "의존성 설치 중..."
       - npm install
 
   build:
     commands:
-      - echo Vue.js 프로젝트 빌드 중...
+      - echo "Vue.js 프로젝트 빌드 중..."
       - npm run build
 
 artifacts:
   files:
     - '**/*'
-  base-directory: build  # 결과물이 위치한 기본 디렉토리는 'build'
-
-
+  base-directory: dist  # 결과물이 위치한 기본 디렉토리는 'dist'
