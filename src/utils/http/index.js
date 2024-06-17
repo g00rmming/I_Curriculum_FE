@@ -111,6 +111,24 @@ const httpApi = {
             })
         })
     },
+    patch: function (url, body, opt) {
+        const apiOpt = {
+            url: url,
+            params: opt?.params ?? {},
+            headers: opt?.headers ?? defaultHeader,
+            body: body ?? {}
+        }
+        return new Promise((resolve, reject) => {
+            axios.patch(url, apiOpt.body, {
+                params: apiOpt.params,
+                headers: apiOpt.headers
+            }).then((response) => {
+                resolve(response);
+            }).catch((error) => {
+                reject(error);
+            })
+        })
+    }
 }
 
 export default httpApi;
