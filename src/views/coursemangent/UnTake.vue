@@ -838,9 +838,10 @@ export default {
         fetchData() { // 데이터를 가져오는 함수
             this.onLoading = true;
             console.log('fetchData 호출됨'); // 로그 추가
+            const userId=localStorage.getItem('memberId');
             this.$axios.get('/v1/courses/untake', {
                 params: {
-                    memberId: 1 // TODO : 실제 사용자 ID로 변경
+                    memberId: userId // TODO : 실제 사용자 ID로 변경
                 }
             })
             .then(response => { 
@@ -858,8 +859,8 @@ export default {
                 console.log("here", this.unTakeList);
             })
             .catch(error => {
-                console.error('오류 발생:', error); // 오류 로그 추가
-                this.$swal("데이터를 가져오는데 실패했습니다.", '', "error");
+                console.error('오류 발생1:', error); // 오류 로그 추가
+                this.$swal("로그인을 해주세요.", '', "error");
             })
             .finally(() => {
                 this.onLoading = false;
@@ -884,6 +885,7 @@ export default {
         },
         AddTake() {
         // MyBucketList를 CreateTakeDTO 형식으로 변환
+            const userId=localStorage.getItem('memberId');
         const createTakeDTOList = this.MyBucketList.map(item => {
                 return {
                     courseId: Number(item.courseId), // 실제 데이터에서 적절한 필드를 매핑하세요
@@ -900,7 +902,7 @@ export default {
 
         this.$axios.post('/v1/courses/take/new', requestData, {
             params: {
-                memberId: 1 // TODO: 실제 사용자 ID로 변경
+                memberId: userId // TODO: 실제 사용자 ID로 변경
             }
         })
         .then(response => {
@@ -913,7 +915,7 @@ export default {
                 });
         })
         .catch(error => {
-            console.error('오류 발생:', error); 
+            console.error('오류 발생2:', error); 
             this.$swal("이수내역 추가에 실패했습니다.", '', "error");
         });
     }
