@@ -43,6 +43,10 @@ module.exports = defineConfig({
       '/login': {
         target: `${springbootUrl}:${springport}`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
+      },
+      '/reissue': {
+        target: `${springbootUrl}:${springport}`, // 프록시할 대상 서버의 주소
+        changeOrigin: true,
       }
     }
   }

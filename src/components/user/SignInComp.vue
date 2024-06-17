@@ -72,7 +72,9 @@ export default {
     };
   },
   mounted: function () {
-
+          localStorage.removeItem("authorization");
+          localStorage.removeItem("isAuthenticated");
+          localStorage.removeItem("memberId");
   },
   methods: {
     userValidation() {
@@ -84,13 +86,15 @@ export default {
         const frm = new FormData()
         frm.append('username', this.loginInfo.email)
         frm.append('password', this.loginInfo.password)
-        
+
         this.$axios.post('/login', frm, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
         ).then((res) => {
+
+
           // // 토큰을 LocalStorage에 저장
           // localStorage.setItem("authorization", res.headers.authorization);
           // localStorage.setItem("isAuthenticated", true);
@@ -101,14 +105,25 @@ export default {
           console.log(localStorage, "#########################################localstroage 검사입니다#########################################3")
           console.log(this.$store, "#########################################store 검사입니다!!#########################################");
 
-          this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`)
-          .then((res)=>{
-              console.log(res,"test")            
-          })
+
+          // this.$cookies.set('test', this.headers.);
+          // const cookie = this.$cookies.get('test');
+          // console.log(cookie,'seok'); //testValue
+
+          // 멤버 정보를 가져오기
+          // this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`, {
+          //   'Content-Type': 'application/json',
+          //   'Accept': 'application/json',
+          //   'Authorization': `${res.headers.authorization}`,
+          // })
+          //   .then((res1) => {
+          //     console.log(res1, "test")
+          //   })
+          
           this.$router.push({ name: 'dashboard' });
         })
-          .catch((err) => {
-            console.log(err);
+          .catch((err1) => {
+            console.log(err1);
           })
       } else {
         alert('Please enter your username and password');

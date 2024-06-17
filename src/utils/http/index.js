@@ -3,32 +3,41 @@ import axios from 'axios';
 // 타임아웃 30초
 axios.defaults.timeout = 30000;
 axios.interceptors.request.use(config => {
+     // 토큰을 가져와서 Authorization 헤더에 추가
+     const token = localStorage.getItem('authorization');
+     if (token) {
+       config.headers.Authorization = `${token}`;
+     }
     console.log("요청 전 ", config.url);
     return config;
 }, error => {
     return Promise.reject(error);
 });
+
 axios.interceptors.response.use(response => {
     console.log("응답이완료 ", response.config.url);
     return response;
-}, error => {
+}, async (error) => {
     // 프로그램 방식으로 컴포넌트 호출
-    
     if(error.response.status===401) {
         alert(error.response.status)
         return Promise.reject(error);
     }
     if(error.response.status===400){
-        return Promise.reject(error);
+        // 로그인 access 토큰이 만료 되었을때
+        return Promise.reject(error); 
+    }
+    if(error.response.status===406){
+        // refresh token 만료
+        return Promise.reject(error); 
     }
     // return Promise.reject(error);
 });
 
-const token=localStorage.getItem('authorization');
+
 const defaultHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': `${token}`,
 }
 
 
