@@ -72,17 +72,6 @@
     </div>
   </div>
   
-
- <!-- 성적 추이도를 나타내는 꺾은선 그래프 -->
- <div class="col-lg-12 col-md-12">
-      <div class="border card">
-        <div class="card-header">
-          <h3 class="card-title">성적 추이도</h3>
-        </div>
-        <apexchart type="line" height="350" :options="lineChartOptions" :series="lineChartSeries"></apexchart>
-      </div>
-  </div>
-
   <RecommendComp :isVisible="modalMajorVisible" @close="modalMajorVisible = false" :RecommendDataList="majorList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralVisible" @close="modalGeneralVisible = false" :RecommendDataList="generalList"> </RecommendComp>
   <RecommendComp :isVisible="modalGeneralCoreVisible" @close="modalGeneralCoreVisible = false" :RecommendDataList="generalCoreList"> </RecommendComp>
@@ -127,9 +116,6 @@ export default {
       generalSeries: [], //교양
       generalCoreSeries: [], //핵교 
 
-      lineChartSeries: [], // 성적 추이 그래프
-
-      gradeData: [3.2, 3.5, 3.8, 4.0], // 예시 성적 데이터
 
       //차트 옵션
       majorChartOptions: {
@@ -309,34 +295,6 @@ export default {
           }
         }
       },
-  lineChartOptions: {
-        chart: {
-          height: 350,
-          type: 'line',
-          zoom: {
-            enabled: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'straight'
-        },
-        title: {
-          text: '학년별 성적 추이도',
-          align: 'left'
-        },
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // alternating row colors
-            opacity: 0.5
-          },
-        },
-        xaxis: {
-          categories: ['1학년', '2학년', '3학년', '4학년'],
-        }
-      }
     };
   },
   mounted() {
@@ -359,12 +317,6 @@ export default {
         this.generalCoreChartOptions.labels = ['1영역', '2영역', '3영역', '4영역', '5영역', '6영역', '창의', '미이수'];
         this.generalCoreChartOptions.colors = ["#008FFB", "#00E396", "#FF5733", "#FFC300", "#900C3F", "#DAF7A6", "#6F42C1", "#F05650"];
       }
-
-      this.lineChartSeries = [{
-        name: "성적",
-        data: this.gradeData
-      }];
-   
        // '전공 이수 학점'이 65 이상인지 확인하여 시리즈를 설정
       if (this.majorTakenCredit >= 65) {
       this.majorSeries = [65];

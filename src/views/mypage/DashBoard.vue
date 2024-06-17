@@ -212,15 +212,6 @@
 
         </div>
       </div>
-      <div>
-        <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary">AI에게 수강과목을 바탕으로 진로 추천받기</button>
-        <div v-if="promptResponse">
-          <h3>응답 결과:</h3>
-          <div class="response-card">
-            <p style="text-align: left;" v-html="formatResponse(promptResponse)"></p>
-          </div>
-        </div>
-      </div>
       <!--  영역 끝-->
       <ResourceAllocation :majorList="majorList" 
       :generalList="generalList" 
@@ -243,7 +234,37 @@
       :standardCredit="memberData.standardCredit"
       >
     </ResourceAllocation>
+    <div>
+    <button v-if="buttonVisible" @click="handleClick" class="btn btn-primary mb-3">AI에게 수강과목을 바탕으로 진로 추천받기</button>
+    <div v-if="loading">
+      <h1>Loading<span class="animated-dots"></span></h1>
     </div>
+    <div v-if="promptResponse && !loading" class="col-12">
+      <div class="card card-md">
+        <div class="card-stamp card-stamp-lg">
+          <div class="card-stamp-icon bg-primary">
+            <!-- 아이콘 또는 이미지 추가 -->
+            <i class="fas fa-robot"></i>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-10">
+              <h3 class="page-title">응답 결과</h3>
+              <p></p>
+              <div class="markdown">
+                <p ref="responseText" v-html="promptResponse"></p>
+              </div>
+              <div class="mt-3">
+                <!-- 추가 정보 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 </template>
 
@@ -405,20 +426,22 @@ export default {
             // 응답 데이터를 처리하고, output 값을 promptResponse에 저장
             this.promptResponse = response.data.output;
             console.log('응답 받음:', this.promptResponse);
+            this.loading = false;
           })
           .catch(error => {
             // 오류 처리
             console.error('오류 발생:', error);
+            this.loading = false;
           });
         },
         handleClick() {
+          this.loading = true;
           this.fetchData2();
           this.buttonVisible = false; // 버튼을 클릭하면 사라지게 설정
         },
-        formatResponse(response) {
-          return response.replace(/\n/g, '<br>');
+      
         },
-      },
+
       watch: {},
       };
 </script>
@@ -494,4 +517,11 @@ export default {
 .el-input__icon {
   line-height: 16px !important;
 }
+.markdown p {
+  font-size: 1.1em;
+  white-space: pre-wrap; /* 줄바꿈을 위한 스타일 */
+  margin: 0; /* 텍스트 주변의 여백을 제거 */
+  justify-content: end;
+}
+
 </style>
