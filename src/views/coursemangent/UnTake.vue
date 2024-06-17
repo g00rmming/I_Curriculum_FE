@@ -949,7 +949,10 @@ export default {
                 })
                 .catch(error => {
                     console.error('오류 발생1:', error); // 오류 로그 추가
+
+
                     this.$swal("로그인을 해주세요.", '', "error");
+
                 })
                 .finally(() => {
                     this.onLoading = false;
@@ -1010,6 +1013,13 @@ export default {
         }
         ,
         addItem(item) { // 장바구니에 추가하는 함수
+
+            if (!item.code || !item.grade || !item.myYear) {
+                this.$swal("영역, 학점, 이수학기를 모두 입력하세요.", '', "warning");
+                return;
+            }
+
+
             const addItem = item;
             this.MyBucketList.push(addItem)
             this.MyBucketList.forEach((item, index) => {
