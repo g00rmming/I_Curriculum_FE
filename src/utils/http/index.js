@@ -3,7 +3,7 @@ import router from '../../router/index';
 axios.defaults.baseURL = 'localhost:8080';
 
 const refreshInstance = axios.create({
-    baseURL: 'http://13.214.163.96:8080',
+    baseURL: 'http://13.214.220.207:8080',
     timeout: 30000
 });
 // 타임아웃 30초
