@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 const fs = require('fs')
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 // const hosturl   = process.env.ROOT_HTTP_PROTOTOL + '://' + process.env.ROOT_HOSTNAME;
 
 const dev = 'local';

@@ -128,11 +128,12 @@ export default {
           this.$router.push({ name: 'dashboard' });
         })
         })
-          .catch(() => {
-            
+          .catch(error => {
+            console.log("here1", error);
             this.$swal('아이디 및 비밀번호를 확인하세요.', '', 'warning');
           })
       } else {
+        console.log("here2");
         this.$swal('아이디 및 비밀번호를 입력하세요.', '', 'warning');
       }
     }
