@@ -64,7 +64,7 @@ export default {
   inject: ['$axios'],
   data() {
     return {
-      apiurl: '/api/v1/members',
+      apiurl: '/v1/members',
       loginInfo: {
         email: '',
         password: ''
@@ -117,7 +117,7 @@ export default {
           // console.log(cookie,'seok'); //testValue
 
           // 멤버 정보를 가져오기
-          this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`, {
+          this.$axios.get(`/api/v1/members/my-info/${res.data.memberId}`, {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `${res.headers.authorization}`,
