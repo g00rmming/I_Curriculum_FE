@@ -122,11 +122,12 @@ export default {
           this.$router.push({ name: 'dashboard' });
         })
         })
-          .catch((err1) => {
-            console.log(err1);
+          .catch(() => {
+            
+            this.$swal('아이디 및 비밀번호를 확인하세요.', '', 'warning');
           })
       } else {
-        this.$swal('중복 체크를 해주세요.', '', 'warning');
+        this.$swal('아이디 및 비밀번호를 입력하세요.', '', 'warning');
       }
     }
   },
