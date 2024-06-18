@@ -30,24 +30,24 @@ axios.interceptors.response.use(response => {
     }
     if (error.response.status === 400) {
         // 로그인 access 토큰이 만료 되었을때
-        try {
-            refreshInstance.post('/reissue', {
-                params: {},
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            }).then((res) => {
-                localStorage.setItem('authorization', res.headers.authorization);
-                error.config.headers.Authorization = `${res.headers.authorization}`;
-                window.location.reload()
-                return axios(error.config); // 원래 요청 재시도
-            })
+        // try {
+        //     refreshInstance.post('/reissue', {
+        //         params: {},
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Accept': 'application/json',
+        //         }
+        //     }).then((res) => {
+        //         localStorage.setItem('authorization', res.headers.authorization);
+        //         error.config.headers.Authorization = `${res.headers.authorization}`;
+        //         window.location.reload()
+        //         return axios(error.config); // 원래 요청 재시도
+        //     })
 
-        } catch (error1) {
-            console.log(error1);
-            return Promise.reject(error1);
-        }
+        // } catch (error1) {
+        //     console.log(error1);
+        //     return Promise.reject(error1);
+        // }
 
     }
     if (error.response.status === 406) {
