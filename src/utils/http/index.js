@@ -1,6 +1,6 @@
 import axios from 'axios';
 import router from '../../router/index';
-axios.defaults.baseURL = 'http://13.214.163.96:8080';
+axios.defaults.baseURL = 'localhost:8080';
 
 const refreshInstance = axios.create({
     timeout: 30000
