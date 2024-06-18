@@ -149,4 +149,6 @@ const router = createRouter({
 
 
 
-export default router
+export default router ({
+  mode: 'history', // HTML5 History 모드
+})
