@@ -1,9 +1,8 @@
 import axios from 'axios';
 import router from '../../router/index';
-
+axios.defaults.baseURL = 'http://13.214.163.96:8080';
 
 const refreshInstance = axios.create({
-    baseURL: 'http://grooming-01-s3.s3-website-ap-southeast-1.amazonaws.com/',
     timeout: 30000
 });
 // 타임아웃 30초
