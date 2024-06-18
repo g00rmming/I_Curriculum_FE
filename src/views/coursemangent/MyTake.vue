@@ -99,7 +99,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr>
                                     </template>
                                     <template v-else>
@@ -156,7 +158,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr>
                                         <!-- <tr v-for="item in filteredDataList['2']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
@@ -167,7 +171,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr> -->
                                     </template>
                                     <template v-else>
@@ -224,7 +230,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr>
                                         <!-- <tr v-for="item in filteredDataList['4']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
@@ -235,7 +243,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr> -->
                                     </template>
                                     <template v-else>
@@ -292,7 +302,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr>
                                         <!-- <tr v-for="item in filteredDataList['6']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
@@ -303,7 +315,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr> -->
                                     </template>
                                     <template v-else>
@@ -360,7 +374,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr>
                                         <!-- <tr v-for="item in filteredDataList['8']" :key="item.takeId">
                                             <td><input type="checkbox" v-model="selectedItems" :value="item.takeId"></td>
@@ -371,7 +387,9 @@
                                             <td>{{ item.credit }}</td>
                                             <td>{{ item.takenLevel }}</td>
                                             <td>{{ item.people }}</td>
+
                                             <button @click="toggleModal(item)" class="btn btn-pill" style="padding: 0.3rem;">수정</button>
+
                                         </tr> -->
                                     </template>
                                     <template v-else>
@@ -386,7 +404,11 @@
                 </div>
             </div>
         </div>
-        <TakeBuket ref="updateModalComponent" :modalType="modalType" :courseData="courseData" :updateItem="confirmUpdate">
+
+
+
+        <TakeBuket ref="updateModalComponent" :modalType="modalType" :courseData="courseData" :updateItem="updateItem">
+
         </TakeBuket>
     </div>
 </template>
@@ -459,10 +481,12 @@ export default {
             }
         },
         updateItem(takeId, item) {
+
             if (!item.code || !item.grade || !item.myYear) {
                 this.$swal("영역, 학점, 이수학기를 모두 입력하세요.", '', "warning");
                 return;
             }
+
 
 
             this.onLoading = true;
@@ -527,6 +551,9 @@ export default {
                 })
                 .catch(error => {
                     console.error('데이터 가져오기 실패:', error);
+
+                    this.$swal("로그인을 해주세요.", '', "error");
+
                 })
                 .finally(() => {
                     this.onLoading = false;
@@ -555,11 +582,15 @@ export default {
                 this.deleteSelectedItems();
             }
         },
+
         confirmUpdate(takeId, item) {
             if (confirm("정말 수정하시겠습니까?")) {
                 this.updateItem(takeId, item);
             }
         },
+
+
+
         deleteSelectedItems() {
             if (this.selectedItems.length === 0) {
                 alert('삭제할 항목을 선택하세요.');

@@ -6,14 +6,20 @@ phases:
       nodejs: 16 # Node.js 버전 지정
     commands:
       - echo "의존성 설치 중..."
+
       - yarn install
+
+
 
   build:
     commands:
       - echo "Vue.js 프로젝트 빌드 중..."
+
       - yarn vue-cli-service build
 
 artifacts:
   files:ㄴ
     - '**/*'
+
   base-directory: dist  # 결과물이 위치한 기본 디렉토리는 'dist'
+
