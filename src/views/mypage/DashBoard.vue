@@ -190,7 +190,7 @@ export default {
       const userId = localStorage.getItem('memberId');
       
       try {
-        const dashboardResponse = await this.$axios.get('/v1/dashboard', {
+        const dashboardResponse = await this.$axios.get('/api/v1/dashboard', {
           params: { memberId: userId }
         });
 
@@ -244,7 +244,7 @@ export default {
           }))
         };
 
-        const takenCoursesResponse = await this.$axios.get('/v1/courses/take', {
+        const takenCoursesResponse = await this.$axios.get('/api/v1/courses/take', {
           params: { memberId: userId }
         });
         
@@ -255,7 +255,7 @@ export default {
           console.error('받은 데이터가 배열이 아닙니다:', takenCoursesResult);
         }
 
-        const untakenCoursesResponse = await this.$axios.get('/v1/courses/untake', {
+        const untakenCoursesResponse = await this.$axios.get('/api/v1/courses/untake', {
           params: { memberId: userId }
         });
 

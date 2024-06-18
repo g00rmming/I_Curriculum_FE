@@ -91,7 +91,7 @@ export default {
   inject: ['$axios'],
   data() {
     return {
-      apiurl: '/v1/members',
+      apiurl: '/api/v1/members',
       memberInfo: { //이메일 비밀번호 닉네임 입학년도 완료학기 소속과이름
         clientId: '',
         password: '',
@@ -112,7 +112,7 @@ export default {
   },
   methods: {
      async fetchData(){
-      const department =  await this.$axios.get('/v1/departments-names');
+      const department =  await this.$axios.get('/api/v1/departments-names');
       this.memberInfo.deptNameList = department.data.result.departmentNameList;
       console.log('yeon', this.memberInfo.deptNameList)
     },
@@ -179,7 +179,7 @@ export default {
         this.$swal('4 ~ 20 자리 사이 아이디를 입력해 주세요.', '', 'warning')
       }else{
         this.checkClick = true
-          const res=  await this.$axios.get('/v1/members/isExistId', {
+          const res=  await this.$axios.get('/api/v1/members/isExistId', {
           params: { clientId : this.memberInfo.clientId }
         });
         this.checkDuplicate = res.data.result;
