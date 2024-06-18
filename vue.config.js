@@ -10,7 +10,7 @@ const dev = 'local';
 const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKET_PORT_EXT;
 
 // 개발환경 - 아래 프록시를 로컬환경에서 실행 했을 경우 사용
-const springbootUrl = `${process.env.ROOT_HTTP_PROTOTOL_LOCAL}://${process.env.SPRING_HOSTNAME}`
+const springbootUrl = `http://13.214.163.96`
 
 
 module.exports = defineConfig({
@@ -37,19 +37,11 @@ module.exports = defineConfig({
       },
       // 프록시 요청을 보낼 api의 시작 부분 
       '/v1': {
-        target: `${springbootUrl}:${springport}/api`, // 프록시할 대상 서버의 주소
+        target: `${springbootUrl}:8080/api`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       },
       '/login': {
-        target: `${springbootUrl}:${springport}`, // 프록시할 대상 서버의 주소
-        changeOrigin: true,
-      },
-      '/reissue': {
-        target: `${springbootUrl}:${springport}`, // 프록시할 대상 서버의 주소
-        changeOrigin: true,
-      },
-      '/logout': {
-        target: `${springbootUrl}:${springport}`, // 프록시할 대상 서버의 주소
+        target: `${springbootUrl}:8080`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       }
     }
