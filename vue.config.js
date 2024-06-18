@@ -44,7 +44,7 @@ module.exports = defineConfig({
         changeOrigin: true,
       },
       '/login': {
-        target: `${process.env.ROOT_HTTP_PROTOTOL_LOCAL}+'://'+ ${process.env.SPRING_HOSTNAME}+'.'+'${SRPING_PORT}`, // 프록시할 대상 서버의 주소
+        target: `${process.env.ROOT_HTTP_PROTOTOL_LOCAL}+'://'+ ${process.env.SPRING_HOSTNAME}+'.'+${process.env.SRPING_PORT}`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       }
     }
