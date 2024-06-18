@@ -64,7 +64,7 @@ export default {
   inject: ['$axios'],
   data() {
     return {
-      apiurl: '/v1/members',
+      apiurl: '/api/v1/members',
       loginInfo: {
         email: '',
         password: ''
