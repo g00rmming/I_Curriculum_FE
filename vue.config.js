@@ -37,7 +37,7 @@ module.exports = defineConfig({
       },
       // 프록시 요청을 보낼 api의 시작 부분 
       '/v1': {
-        target: 'http://${process.env.VUE_APP_SPRING_HOSTNAME}', // 프록시할 대상 서버의 주소
+        target: process.env.VUE_APP_SPRING_HOSTNAME, // 프록시할 대상 서버의 주소
         changeOrigin: true,
         pathRewrite: { '^/v1': '/api/v1' }, // 필요에 따라 경로 재작성
       },
