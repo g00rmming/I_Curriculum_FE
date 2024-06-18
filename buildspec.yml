@@ -18,7 +18,7 @@ phases:
       - yarn vue-cli-service build
 
 artifacts:
-  files:ㄴ
+  files:
     - '**/*'
 
   base-directory: dist  # 결과물이 위치한 기본 디렉토리는 'dist'
