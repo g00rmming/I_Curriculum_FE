@@ -13,84 +13,68 @@
           <form action="./" method="get" autocomplete="off" novalidate>
             <div class="mb-3">
               <label class="form-label">아이디(ID)</label>
-              <input v-model="memberInfo.clientId" type="email" class="form-control" placeholder="your ID"
-                autocomplete="off" />
-                <a @click="isExisted()" class="btn  btn-pill btn-primary" role="button">중복체크</a>
+              <div class="input-group">
+                <input v-model="memberInfo.clientId" type="email" class="form-control" placeholder="your ID" autocomplete="off" />
+                <a @click="isExisted" class="btn btn-primary" role="button">중복체크</a>
+              </div>
             </div>
             <div class="mb-3">
               <label class="form-label">닉네임</label>
-              <input v-model="memberInfo.nickname" type="email" class="form-control" placeholder="nickname"
-                autocomplete="off" />
+              <input v-model="memberInfo.nickname" type="text" class="form-control" placeholder="nickname" autocomplete="off" />
             </div>
             <div class="mb-2">
-              <label class="form-label">
-                비밀번호(Password)
-                <!-- <span class="form-label-description text-primary">
-                    <router-link to="/forgotpassword" tabindex="-1" style="color: rgba(var(--tblr-link-color-rgb),var(--tblr-link-opacity,1))"> 비밀번호 찾기</router-link>
-                  </span> -->
-              </label>
+              <label class="form-label">비밀번호(Password)</label>
               <div class="input-group input-group-flat">
-                <input v-model="memberInfo.password" type="password" class="form-control" placeholder="Your password"
-                  autocomplete="off" />
+                <input v-model="memberInfo.password" type="password" class="form-control" placeholder="Your password" autocomplete="off" />
                 <span class="input-group-text">
-                  <a href="#" class="link-secondary" title="Show password"
-                    data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                      stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                      <path
-                        d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                      <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
                     </svg>
                   </a>
                 </span>
               </div>
             </div>
             <br>
-
             <div class="mb-3">
               <label class="form-label">학과</label>
-              <input v-model="memberInfo.department_name" type="email" class="form-control" placeholder="학과를 입려하시오."
-                autocomplete="off" />
+              <select v-model="memberInfo.department_name" class="form-select">
+                <option v-for="term in memberInfo.deptNameList" :key="term" :value="term">{{ term }}</option>
+              </select>
             </div>
-
             <div class="mb-3">
               <label class="form-label">입학년도</label>
               <select v-model="memberInfo.joinYear" class="form-select">
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                          
-                                        </select>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+              </select>
             </div>
-
             <div class="mb-3">
               <label class="form-label">현재 학기</label>
               <select v-model="memberInfo.compeleteTerm" class="form-select">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                          
-                                        </select>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
             </div>
-
             <div class="form-footer mb-2 text-center">
-              <a @click="createMember()" class="btn  btn-pill btn-primary" role="button">회원가입</a>
+              <a @click="createMember" class="btn btn-pill btn-primary" role="button">회원가입</a>
             </div>
           </form>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -126,9 +110,10 @@ export default {
     this.fetchData();
   },
   methods: {
-     fetchData(){
-      const department =  this.$axios.get('/api/v1/departments-names');
-      console.log('yeon',department);
+     async fetchData(){
+      const department =  await this.$axios.get('v1/departments-names');
+      this.memberInfo.deptNameList = department.data.result.departmentNameList;
+      console.log('yeon', this.memberInfo.deptNameList)
     },
     createMember() {
       this.$swal({
@@ -184,6 +169,8 @@ export default {
       // 아이디 중복 체크 메서드. 중복체크 클릭 버튼과 중복인지 아닌지를 bool 값으로 지정.
       if(this.memberInfo.clientId == ''){
         this.$swal('아이디를 입력해 주세요.', '', 'warning')
+      }else if(this.memberInfo.clientId.length < 4){
+        this.$swal('4 ~ 20 자리 사이 아이디를 입력해 주세요.', '', 'warning')
       }else{
         this.checkClick = true
           const res=  await this.$axios.get('/v1/members/isExistId', {
@@ -202,3 +189,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+.input-group {
+  display: flex;
+}
+
+.input-group .btn-primary {
+  margin-left: 10px;
+  white-space: nowrap;
+}
+</style>
