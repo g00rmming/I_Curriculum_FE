@@ -112,7 +112,7 @@ export default {
   },
   methods: {
      async fetchData(){
-      const department =  await this.$axios.get('v1/departments-names');
+      const department =  await this.$axios.get('/v1/departments-names');
       this.memberInfo.deptNameList = department.data.result.departmentNameList;
       console.log('yeon', this.memberInfo.deptNameList)
     },
