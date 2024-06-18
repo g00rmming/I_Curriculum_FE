@@ -14,6 +14,7 @@ const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKE
 const springbootUrl = `http://13.214.163.96`
 
 
+
 module.exports = defineConfig({
   // 기본 경로를 명시적으로 설정합니다.
   publicPath: '/',
@@ -38,11 +39,12 @@ module.exports = defineConfig({
       },
       // 프록시 요청을 보낼 api의 시작 부분 
       '/v1': {
-        target: `${springbootUrl}:8080/api`, // 프록시할 대상 서버의 주소
+        target: `${process.env.VUE_APP_EC2_IP}/api`, // 프록시할 대상 서버의 주소
+        
         changeOrigin: true,
       },
       '/login': {
-        target: `${springbootUrl}:8080`, // 프록시할 대상 서버의 주소
+        target: `${process.env.VUE_APP_EC2_IP}`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       }
     }
