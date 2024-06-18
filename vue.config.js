@@ -41,8 +41,9 @@ module.exports = defineConfig({
         changeOrigin: true,
       },
       '/login': {
-        target: `${springbootUrl}`, // 프록시할 대상 서버의 주소
+        target: process.env.VUE_APP_SPRING_HOSTNAME,
         changeOrigin: true,
+        pathRewrite: { '^/login': '/login' }
       }
     }
   }
