@@ -11,7 +11,7 @@ const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKE
 
 // 개발환경 - 아래 프록시를 로컬환경에서 실행 했을 경우 사용
 
-const springbootUrl = `https://13.215.224.254`
+const springbootUrl = `http://13.215.224.254`
 
 module.exports = defineConfig({
   // 기본 경로를 명시적으로 설정합니다.
@@ -31,7 +31,7 @@ module.exports = defineConfig({
     // 프록시 설정
     proxy: {
       // '/api': {
-      //   target: 'https://ek66mfbfpfa23yw5qfymhrh6ti0vnirc.lambda-url.ap-southeast-1.on.aws',
+      //   target: 'http://ek66mfbfpfa23yw5qfymhrh6ti0vnirc.lambda-url.ap-southeast-1.on.aws',
       //   changeOrigin: true,
       //   pathRewrite: { '^/api': '' },
       // },
