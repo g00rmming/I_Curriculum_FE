@@ -11,7 +11,7 @@ const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKE
 
 // 개발환경 - 아래 프록시를 로컬환경에서 실행 했을 경우 사용
 
-const springbootUrl = `http://47.129.11.199`
+const springbootUrl = `https://47.129.11.199`
 
 module.exports = defineConfig({
   // 기본 경로를 명시적으로 설정합니다.

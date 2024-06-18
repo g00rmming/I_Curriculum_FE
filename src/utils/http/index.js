@@ -2,12 +2,12 @@ import axios from 'axios';
 import router from '../../router/index';
 
 const refreshInstance = axios.create({
-    baseURL: `http://${process.env.VUE_APP_SPRING_HOSTNAME}`,
+    baseURL: `https://${process.env.VUE_APP_SPRING_HOSTNAME}`,
     timeout: 30000
 });
 // 타임아웃 30초
 axios.defaults.timeout = 30000;
-axios.defaults.baseURL = `http://${process.env.VUE_APP_SPRING_HOSTNAME}`; // 기본 URL 설정
+axios.defaults.baseURL = `https://${process.env.VUE_APP_SPRING_HOSTNAME}`; // 기본 URL 설정
 
 axios.interceptors.request.use(config => {
     // 토큰을 가져와서 Authorization 헤더에 추가
