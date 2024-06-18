@@ -68,7 +68,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title ">전체 학점</h3>
-                <div class="h1 my-1 me-2">{{ memberData.totalGrade }} /<span>(4.5)</span>
+                <div class="h1 my-1 me-2">{{ memberData.totalGrade }} /<span>4.5</span>
                 </div>
                 <div class="me-auto">
                   <!-- ... -->
@@ -86,7 +86,7 @@
               </div>
               <div class="card-body">
                 <h3 class="card-title ">전공 학점</h3>
-                <div class="h1 my-1 me-2">{{ memberData.majorGrade }}/(4.5)</div>
+                <div class="h1 my-1 me-2">{{ memberData.majorGrade }}/4.5</div>
                 <div class="me-auto">
                   <!-- ... -->
                 </div>

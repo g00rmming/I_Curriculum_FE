@@ -43,30 +43,32 @@
               </svg>
             </a>
           </div>
-          
+
           <!-- 아바타 버튼 -->
           <div class="nav-item dropdown">
-            <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+            <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+              aria-label="Open user menu">
               <span class="avatar avatar-sm">
-                <img v-if="avatarImg!=='NONE' && avatarImg" style="max-width: 80%;" :src="avatarImg" />
+                <img v-if="avatarImg !== 'NONE' && avatarImg" style="max-width: 80%;" :src="avatarImg" />
                 <img v-else style="max-width: 80%;" src="@/static/avatars/noimage.jpg" />
               </span>
               <div class="d-none d-xl-block ps-2">
                 <!-- <div class="mt-1 small text-secondary">UI Designer</div> -->
               </div>
             </a>
-            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="min-width: 200px; padding: 10px;" data-bs-theme="light">
-              <a class="dropdown-item pt-3 pb-1 cursor-default" style="font-weight: 600; font-size: 14px;">유저이름</a>
-              <a class="dropdown-item pt-0 cursor-default">유저 이메일</a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="min-width: 200px; padding: 10px;"
+              data-bs-theme="light">
+              <a class="dropdown-item pt-3 pb-1 cursor-default" style="font-weight: 600; font-size: 14px;">닉네임 : {{ username }}</a>
+              <a class="dropdown-item pt-0 cursor-default">학과 : {{ departName}}</a>
               <div class="dropdown-divider"></div>
-              <router-link class="dropdown-item" to="/myaccount">
+              <!-- <router-link class="dropdown-item" to="/myaccount">
                 <span
-                  class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                  class="nav-link-icon d-md-none d-lg-inline-block">
                   <SvgIcon iconId="account" height="24" width="24" />
                 </span>
                 <span>Account</span>
-              </router-link>
-              <a href="" v-on:click="logout()" class="dropdown-item">
+              </router-link> -->
+              <a v-on:click="logout()" class="dropdown-item">
                 <span
                   class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                   <SvgIcon iconId="logout" height="24" width="24" />
@@ -92,7 +94,7 @@
                   <span class="nav-link-title"> 마이페이지 </span>
                 </router-link>
               </li>
-              
+
               <!-- 수강내역관리 -->
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -121,7 +123,7 @@
                         <span class="nav-link-title"> 이수내역 확인 </span>
                       </router-link>
 
-                      
+
                     </div>
                   </div>
                 </div>
@@ -141,9 +143,9 @@
                 <div class="dropdown-menu">
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
-                     
 
-                      <router-link class="dropdown-item" to="/" title="이수체계도">
+
+                      <router-link class="dropdown-item" to="/CurriculumDiagram" title="이수체계도">
                         <span
                           class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <SvgIcon iconId="team" height="24" width="24" />
@@ -151,7 +153,7 @@
                         <span class="nav-link-title"> 이수체계도 </span>
                       </router-link>
 
-                      <router-link class="dropdown-item" to="/r" title="교과과정표">
+                      <router-link class="dropdown-item" to="/CurriculumTable" title="교과과정표">
                         <span
                           class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                           <SvgIcon iconId="employee" height="24" width="24" />
@@ -159,15 +161,13 @@
                         <span class="nav-link-title"> 교과과정표 </span>
                       </router-link>
 
-                 
+
                     </div>
                   </div>
                 </div>
               </li>
-             
-             
             </ul>
-            
+
           </div>
         </div>
       </div>
@@ -180,30 +180,39 @@ import SvgIcon from "@/components/share/icons/SvgIcon.vue";
 import RealTimeClock from '@/components/realtime/RealTimeClock.vue';
 
 export default {
+  inject: ['$axios'],
   name: "app",
   components: { SvgIcon, RealTimeClock },
   data() {
     return {
+      departName:localStorage.getItem("department_name"),
+      username:localStorage.getItem("nickname"),
       title: "",
       msg: "",
       message: "",
       playAudio: false,
       avatarImg: '',
-      logo:'',
+      logo: '',
     };
   },
   mounted() {
-    this.logo= this.$setLogo('dark')
+    this.logo = this.$setLogo('dark')
   },
   computed: {
-    
-    
+
   },
   methods: {
     logout() {
       // this.$store.commit("deleteSession");
-      localStorage.clear();
-      this.$router.push("/signin")
+      this.$axios.post('/logout')
+        .then((res) => {
+          console.log(res);
+          localStorage.clear();
+          this.$swal('로그아웃 완료', '', 'success');
+          this.$router.push('/')
+        }).catch((err) => {
+          console.log(err);
+        })
     },
     toggleTheme() {
       const currentTheme = window.document.body.getAttribute('data-bs-theme');
@@ -222,6 +231,7 @@ export default {
 }
 
 @media (min-width: 800px) {
+
   #towTop.container-xl,
   #towLow.container-xl {
     width: 86%;
