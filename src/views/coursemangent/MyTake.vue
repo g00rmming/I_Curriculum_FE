@@ -494,6 +494,7 @@ export default {
             const updateTakenCourseDTO = {
                 takenTerm: Number(item.myYear), // 이수학년
                 grade: String(item.myGrade), // 성적 (문자열로 변환)
+                category: String(item.categoryName)
             };
             const bindingResult = {};
             this.$axios.patch(`/v1/courses/take/${takeId}`, updateTakenCourseDTO, bindingResult, {

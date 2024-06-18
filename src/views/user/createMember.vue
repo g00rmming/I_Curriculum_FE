@@ -25,9 +25,9 @@
             <div class="mb-2">
               <label class="form-label">비밀번호(Password)</label>
               <div class="input-group input-group-flat">
-                <input v-model="memberInfo.password" type="password" class="form-control" placeholder="Your password" autocomplete="off" />
+                <input v-model="memberInfo.password" :type="passwordFieldType" class="form-control" placeholder="Your password" autocomplete="off" />
                 <span class="input-group-text">
-                  <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
+                  <a href="#" @click="showPassword" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
@@ -102,7 +102,8 @@ export default {
         checkClick: false,
         checkDuplicate: false,
         deptNameList: [],
-      }
+      },
+      passwordFieldType: 'password'
     };
 
   },
@@ -114,6 +115,11 @@ export default {
       const department =  await this.$axios.get('v1/departments-names');
       this.memberInfo.deptNameList = department.data.result.departmentNameList;
       console.log('yeon', this.memberInfo.deptNameList)
+    },
+    showPassword() {
+      console.log("누르기전 = ", this.passwordFieldType);
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+      console.log("누른후 = ", this.passwordFieldType);
     },
     createMember() {
       this.$swal({

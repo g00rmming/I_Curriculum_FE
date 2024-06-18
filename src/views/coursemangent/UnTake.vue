@@ -100,7 +100,7 @@
                         <a @click="searchData" class="btn btn-primary w-100">
                             검색
                         </a>
-                        <a class="btn btn-link w-100">
+                        <a @click="resetFilter" class="btn btn-link w-100">
                             초기화
                         </a>
                     </div>
@@ -240,7 +240,7 @@
                         <!--과목 조회 창-->
                         <div class="table-responsive">
                             <!-- 접어둘때 이용-->
-                            <table id="short_table" v-show="showShortTable" class="table table-vcenter">
+                            <table id="long_table" v-show="showLongTable" class="table table-vcenter">
                                 <thead>
                                     <tr>
                                         <th>학수번호</th>
@@ -266,568 +266,27 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table id="long_table" v-show="showLongTable" class="table table-vcenter ">
+                            <table id="short_table" v-show="showShortTable" class="table table-vcenter ">
                                 <thead>
                                     <tr>
                                         <th>학수번호</th>
                                         <th>과목명</th>
+                                        <th>영역</th>
                                         <th>학점</th>
                                         <th>이수학년</th>
                                         <th>수강인원</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paweł Kuna</td>
-                                        <td>
-                                            <a class="text-ellipsis-project" @click="toggleModal"> UI Designer,
-                                                Training</a>
-                                        </td>
-                                        <td><a href="#" class="text-reset">paweluna@howstuffworks.com</a>
-                                        </td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jeffie Lewzey</td>
-                                        <td>
-                                            Chemical Engineer, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">jlewzey1@seesaa.net</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mallory Hulme</td>
-                                        <td>
-                                            Geologist IV, Support
-                                        </td>
-                                        <td><a href="#" class="text-reset">mhulme2@domainmarket.com</a></td>
-                                        <td>
-                                            User
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dunn Slane</td>
-                                        <td>
-                                            Research Nurse, Sales
-                                        </td>
-                                        <td><a href="#" class="text-reset">dslane3@epa.gov</a></td>
-                                        <td>
-                                            Owner
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emmy Levet</td>
-                                        <td>
-                                            VP Product Management, Accounting
-                                        </td>
-                                        <td><a href="#" class="text-reset">elevet4@senate.gov</a>
-                                        </td>
-                                        <td>
-                                            Admin
-                                        </td>
-                                        <td>
-                                            <a href="#">Edit</a>
-                                        </td>
+                                    <tr v-for="(item, index) in unTakeList.slice(0, 5)" :key="index">
+                                        <td>{{ item.hak }}</td>
+                                        <td><a class="text-ellipsis-project" @click="toggleModal(index, item, 'add')">{{
+                                            item.name }}</a>
+                                        </td>
+                                        <td>{{ item.code }}</td>
+                                        <td>{{ item.grade }}</td>
+                                        <td>{{ item.year }}</td>
+                                        <td>{{ item.people }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -870,11 +329,11 @@ export default {
             searchOption: {
                 courseName: '',
                 courseCode: '',
-                isMajorEssential: false,
-                isMajorSelective: false,
-                isGeneralEssential: false,
-                isGeneralSelective: false,
-                isGeneralCore: false,
+                isMajorEssential: true,
+                isMajorSelective: true,
+                isGeneralEssential: true,
+                isGeneralSelective: true,
+                isGeneralCore: true,
             },
             modalType: 'add',
             onLoading: false,  // 데이터를 가져오면 onloading의 값이 false가 된다.
@@ -957,6 +416,17 @@ export default {
                 .finally(() => {
                     this.onLoading = false;
                 });
+        },
+        resetFilter() {
+            this.searchOption = {
+                courseName: '',
+                courseCode: '',
+                isMajorEssential: true,
+                isMajorSelective: true,
+                isGeneralEssential: true,
+                isGeneralSelective: true,
+                isGeneralCore: true
+            };
         },
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;
