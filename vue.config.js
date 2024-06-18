@@ -11,7 +11,7 @@ const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKE
 
 // 개발환경 - 아래 프록시를 로컬환경에서 실행 했을 경우 사용
 
-const springbootUrl = `http://13.214.163.96`
+const springbootUrl = `http://13.214.163.96:8080`
 
 
 
@@ -44,7 +44,7 @@ module.exports = defineConfig({
         changeOrigin: true,
       },
       '/login': {
-        target: `${process.env.VUE_APP_EC2_IP}`, // 프록시할 대상 서버의 주소
+        target: `${springbootUrl}`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       }
     }
