@@ -1,6 +1,5 @@
 import axios from 'axios';
 import router from '../../router/index';
-axios.defaults.baseURL = 'localhost:8080';
 
 const refreshInstance = axios.create({
     baseURL: 'http://13.214.220.207:8080',
