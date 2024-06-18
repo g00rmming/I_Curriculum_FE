@@ -1,7 +1,7 @@
 <template>
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">이수체계도</h3>
+        <h3 class="card-title">교과과정표</h3>
       </div>
       <div class="card-body">
         <p v-if="loading" class="text-secondary">Loading...</p>
