@@ -100,7 +100,7 @@
                         <a @click="searchData" class="btn btn-primary w-100">
                             검색
                         </a>
-                        <a class="btn btn-link w-100">
+                        <a @click="resetFilter" class="btn btn-link w-100">
                             초기화
                         </a>
                     </div>
@@ -329,11 +329,11 @@ export default {
             searchOption: {
                 courseName: '',
                 courseCode: '',
-                isMajorEssential: false,
-                isMajorSelective: false,
-                isGeneralEssential: false,
-                isGeneralSelective: false,
-                isGeneralCore: false,
+                isMajorEssential: true,
+                isMajorSelective: true,
+                isGeneralEssential: true,
+                isGeneralSelective: true,
+                isGeneralCore: true,
             },
             modalType: 'add',
             onLoading: false,  // 데이터를 가져오면 onloading의 값이 false가 된다.
@@ -412,6 +412,17 @@ export default {
                 .finally(() => {
                     this.onLoading = false;
                 });
+        },
+        resetFilter() {
+            this.searchOption = {
+                courseName: '',
+                courseCode: '',
+                isMajorEssential: true,
+                isMajorSelective: true,
+                isGeneralEssential: true,
+                isGeneralSelective: true,
+                isGeneralCore: true
+            };
         },
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;

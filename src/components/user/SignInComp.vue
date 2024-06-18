@@ -25,10 +25,10 @@
                   </span> -->
               </label>
               <div class="input-group input-group-flat">
-                <input type="password" class="form-control" placeholder="Your password" autocomplete="off"
+                <input :type="passwordFieldType" class="form-control" placeholder="Your password" autocomplete="off"
                   v-model="loginInfo.password" />
                 <span class="input-group-text">
-                  <a href="#" class="link-secondary" title="Show password"
+                  <a href="#" @click="showPassword" class="link-secondary" title="Show password"
                     data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                       stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -69,6 +69,7 @@ export default {
         email: '',
         password: ''
       },
+      passwordFieldType: 'password'
     };
   },
   mounted: function () {
@@ -79,6 +80,11 @@ export default {
           localStorage.removeItem("department_name");
   },
   methods: {
+    showPassword() {
+      console.log("누르기전 = ", this.passwordFieldType);
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+      console.log("누른후 = ", this.passwordFieldType);
+    },
     userValidation() {
       // 로그인 검증 로직 추가
       if (this.loginInfo.email && this.loginInfo.password) {
