@@ -13,12 +13,13 @@
           <form action="./" method="get" autocomplete="off" novalidate>
             <div class="mb-3">
               <label class="form-label">아이디( ID or Email)</label>
-              <input v-model="menberInfo.clientId" type="email" class="form-control" placeholder="your@email.com"
+              <input v-model="memberInfo.clientId" type="email" class="form-control" placeholder="your@email.com"
                 autocomplete="off" />
+                <a @click="isExisted()" class="btn  btn-pill btn-primary" role="button">중복체크</a>
             </div>
             <div class="mb-3">
               <label class="form-label">닉네임</label>
-              <input v-model="menberInfo.nickname" type="email" class="form-control" placeholder="nickname"
+              <input v-model="memberInfo.nickname" type="email" class="form-control" placeholder="nickname"
                 autocomplete="off" />
             </div>
             <div class="mb-2">
@@ -29,7 +30,7 @@
                   </span> -->
               </label>
               <div class="input-group input-group-flat">
-                <input v-model="menberInfo.password" type="password" class="form-control" placeholder="Your password"
+                <input v-model="memberInfo.password" type="password" class="form-control" placeholder="Your password"
                   autocomplete="off" />
                 <span class="input-group-text">
                   <a href="#" class="link-secondary" title="Show password"
@@ -49,13 +50,13 @@
 
             <div class="mb-3">
               <label class="form-label">학과</label>
-              <input v-model="menberInfo.department_name" type="email" class="form-control" placeholder="학과를 입려하시오."
+              <input v-model="memberInfo.department_name" type="email" class="form-control" placeholder="학과를 입려하시오."
                 autocomplete="off" />
             </div>
 
             <div class="mb-3">
               <label class="form-label">입학년도</label>
-              <select v-model="menberInfo.joinYear" class="form-select">
+              <select v-model="memberInfo.joinYear" class="form-select">
                                             <option value="2018">2018</option>
                                             <option value="2019">2019</option>
                                             <option value="2020">2020</option>
@@ -69,7 +70,7 @@
 
             <div class="mb-3">
               <label class="form-label">현재 학기</label>
-              <select v-model="menberInfo.compeleteTerm" class="form-select">
+              <select v-model="memberInfo.compeleteTerm" class="form-select">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -107,13 +108,15 @@ export default {
   data() {
     return {
       apiurl: '/v1/members',
-      menberInfo: { //이메일 비밀번호 닉네임 입학년도 완료학기 소속과이름
+      memberInfo: { //이메일 비밀번호 닉네임 입학년도 완료학기 소속과이름
         clientId: '',
         password: '',
         nickname: '',
         department_name: '',
         joinYear: 0,
-        compeleteTerm: 0
+        compeleteTerm: 0,
+        checkClick: false,
+        checkDuplicate: false,
       }
     }
   },
@@ -131,11 +134,15 @@ export default {
         closeOnCancel: true
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$axios.post(`${this.apiurl}/join`, {
-            clientId: this.menberInfo.clientId,
-            password: this.menberInfo.password,
-            nickname: this.menberInfo.nickname,
-            department_name: this.menberInfo.department_name,
+          if(this.checkClick && !this.checkDuplicate){
+            if(this.memberInfo.clientId == '' ||this.memberInfo.password== '' ||this.memberInfo.nickname =='' || this.memberInfo.department_name == '' || this.memberInfo.joinYear == '' || this.compeleteTerm == ''){
+              this.$swal('빈칸 없이 모든 항목을 입력/선택 해주세요.', '', 'warning'); //입력란에 빈칸 있을 시 다시 입력 받게 함
+            }else{
+              this.$axios.post(`${this.apiurl}/join`, {
+            clientId: this.memberInfo.clientId,
+            password: this.memberInfo.password,
+            nickname: this.memberInfo.nickname,
+            department_name: this.memberInfo.department_name,
             joinYear: this.memberInfo.joinYear,
             compeleteTerm: this.compeleteTerm,
           }).then((res) => {
@@ -149,9 +156,40 @@ export default {
           }).catch((err) => {
             console.log(err);
           })
+            }
+            
+          }else
+          {
+            if(!this.checkClick){
+              this.$swal('중복 체크를 해주세요.', '', 'warning') // 중복체크 안했을 시 join 요청 하지 않음.
+            }
+           
+          }
+          
+        }else{
+          this.$swal('회원가입을 취소 하셨습니다.', '', 'warning') 
         }
       })
-    }
+    },
+     async isExisted() {
+      // 아이디 중복 체크 메서드. 중복체크 클릭 버튼과 중복인지 아닌지를 bool 값으로 지정.
+      if(this.memberInfo.clientId == ''){
+        this.$swal('아이디를 입력해 주세요.', '', 'warning')
+      }else{
+        this.checkClick = true
+          const res=  await this.$axios.get('/v1/members/isExistId', {
+          params: { clientId : this.memberInfo.clientId }
+        });
+        this.checkDuplicate = res.data.result;
+      
+        if(this.checkDuplicate){
+          this.$swal('이미 존재하는 아이디( ID or Email) 입니다.', '', 'warning')
+          this.checkClick =false;
+        }else{
+          this.$swal('사용 가능한 아이디( ID or Email ) 입니다.', '', 'success')
+        }
+      }
+    },
   }
 }
 </script>
