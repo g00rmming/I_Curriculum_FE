@@ -88,7 +88,7 @@ export default {
         const frm = new FormData()
         frm.append('username', this.loginInfo.email)
         frm.append('password', this.loginInfo.password)
-
+        
         this.$axios.post('/login', frm, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -98,7 +98,7 @@ export default {
           // // 토큰을 LocalStorage에 저장
           // localStorage.setItem("authorization", res.headers.authorization);
           // localStorage.setItem("isAuthenticated", true);
-          
+          // localStorage.setItem("memberId", res.data.memberId);
           this.$store.dispatch('login', { token: res.headers.authorization, memberId: res.data.memberId, password: this.loginInfo.password });
           // this.$store.commit('setUser', { username: res.data.memberId });
 
@@ -119,14 +119,14 @@ export default {
               console.log(res1, "test")
               localStorage.setItem("nickname", res1.data.result.nickname);
               localStorage.setItem("department_name", res1.data.result.department_name);
-              this.$router.push({ name: 'dashboard' });
-            })     
+          this.$router.push({ name: 'dashboard' });
+        })
         })
           .catch((err1) => {
             console.log(err1);
           })
       } else {
-        alert('Please enter your username and password');
+        this.$swal('중복 체크를 해주세요.', '', 'warning');
       }
     }
   },

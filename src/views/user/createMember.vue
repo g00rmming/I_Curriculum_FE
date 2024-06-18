@@ -12,8 +12,8 @@
         <div class="card-body">
           <form action="./" method="get" autocomplete="off" novalidate>
             <div class="mb-3">
-              <label class="form-label">아이디( ID or Email)</label>
-              <input v-model="memberInfo.clientId" type="email" class="form-control" placeholder="your@email.com"
+              <label class="form-label">아이디(ID)</label>
+              <input v-model="memberInfo.clientId" type="email" class="form-control" placeholder="your ID"
                 autocomplete="off" />
                 <a @click="isExisted()" class="btn  btn-pill btn-primary" role="button">중복체크</a>
             </div>
@@ -117,10 +117,19 @@ export default {
         compeleteTerm: 0,
         checkClick: false,
         checkDuplicate: false,
+        deptNameList: [],
       }
-    }
+    };
+
+  },
+  mounted(){
+    this.fetchData();
   },
   methods: {
+     fetchData(){
+      const department =  this.$axios.get('/api/v1/departments-names');
+      console.log('yeon',department);
+    },
     createMember() {
       this.$swal({
         title: "회원가입 하시겠습니까?",
@@ -138,7 +147,7 @@ export default {
             if(this.memberInfo.clientId == '' ||this.memberInfo.password== '' ||this.memberInfo.nickname =='' || this.memberInfo.department_name == '' || this.memberInfo.joinYear == '' || this.compeleteTerm == ''){
               this.$swal('빈칸 없이 모든 항목을 입력/선택 해주세요.', '', 'warning'); //입력란에 빈칸 있을 시 다시 입력 받게 함
             }else{
-              this.$axios.post(`${this.apiurl}/join`, {
+               this.$axios.post(`${this.apiurl}/join`, {
             clientId: this.memberInfo.clientId,
             password: this.memberInfo.password,
             nickname: this.memberInfo.nickname,
