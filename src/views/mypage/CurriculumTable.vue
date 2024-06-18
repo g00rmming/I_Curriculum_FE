@@ -34,7 +34,7 @@
       fetchUrl() {
         this.loading = true;
         const userId = localStorage.getItem('memberId');
-        this.$axios.get('/v1/curriculum/table', {
+        this.$axios.get('/api/v1/curriculum/table', {
           params: {
             memberId: userId // 실제 사용자 ID를 사용
           }
