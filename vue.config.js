@@ -37,11 +37,11 @@ module.exports = defineConfig({
       },
       // 프록시 요청을 보낼 api의 시작 부분 
       '/v1': {
-        target: `${springbootUrl}:8080/api`, // 프록시할 대상 서버의 주소
+        target: `http://13.214.220.207:8080/api`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       },
       '/login': {
-        target: `${springbootUrl}:8080`, // 프록시할 대상 서버의 주소
+        target: `http://13.214.220.207:8080`, // 프록시할 대상 서버의 주소
         changeOrigin: true,
       }
     }
