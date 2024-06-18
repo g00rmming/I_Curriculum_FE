@@ -1,8 +1,8 @@
 import axios from 'axios';
 import router from '../../router/index';
 
-
 const refreshInstance = axios.create({
+    baseURL: 'http://13.214.220.207:8080',
     timeout: 30000
 });
 // 타임아웃 30초
