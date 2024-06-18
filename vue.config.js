@@ -10,7 +10,7 @@ const dev = 'local';
 const springport = dev === 'local' ? process.env.SPRING_PORT : process.env.SOCKET_PORT_EXT;
 
 // 개발환경 - 아래 프록시를 로컬환경에서 실행 했을 경우 사용
-const springbootUrl = `http://13.214.142.15`
+const springbootUrl = `http://18.138.34.220`
 
 
 module.exports = defineConfig({
