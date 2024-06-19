@@ -295,7 +295,7 @@ export default {
         prompt: this.prompt
       };
 
-      this.$axios.post('/api', payload)
+      this.$axios.post('https://ek66mfbfpfa23yw5qfymhrh6ti0vnirc.lambda-url.ap-southeast-1.on.aws', payload)
         .then(response => {
           this.promptResponse = response.data.output;
           console.log('응답 받음:', this.promptResponse);
