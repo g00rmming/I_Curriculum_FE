@@ -21,6 +21,7 @@ module.exports = defineConfig({
   },
   // 개발 서버 세팅
   devServer: {
+    port:8082,
     allowedHosts: ['all'],
     headers: { 'Access-Control-Allow-Origin': '*' },
     // 프록시 설정
