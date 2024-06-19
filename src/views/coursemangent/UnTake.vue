@@ -324,7 +324,7 @@ export default {
     },
     data() {
         return {
-            apiurl: '/v1/courses',
+            apiurl: '/api/v1/courses',
             userId: localStorage.getItem('memberId'),
             searchOption: {
                 courseName: '',
@@ -462,7 +462,7 @@ export default {
                 createTakeDTOList: createTakeDTOList
             };
 
-            this.$axios.post('/v1/courses/take/new', requestData, {
+            this.$axios.post('/api/v1/courses/take/new', requestData, {
                 params: {
                     memberId: userId // TODO: 실제 사용자 ID로 변경
                 }
