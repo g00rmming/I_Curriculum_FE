@@ -497,7 +497,7 @@ export default {
                 category: String(item.categoryName)
             };
             const bindingResult = {};
-            this.$axios.patch(`/api/v1/courses/take/${takeId}`, updateTakenCourseDTO, bindingResult, {
+            this.$axios.patch(`/v1/courses/take/${takeId}`, updateTakenCourseDTO, bindingResult, {
                 params: {
                     memberId: userId // 실제 사용자 ID로 변경
                 }
@@ -535,7 +535,7 @@ export default {
             this.onLoading = true;
             const userId = localStorage.getItem('memberId');
             
-            this.$axios.get('/api/v1/courses/take', {
+            this.$axios.get('/v1/courses/take', {
                 params: {
                     memberId: userId // 실제 사용자 ID로 변경
                 }
@@ -598,7 +598,7 @@ export default {
                 return;
             }
             const promises = this.selectedItems.map(takeId => {
-                return this.$axios.delete(`/api/v1/courses/take/${takeId}`);
+                return this.$axios.delete(`/v1/courses/take/${takeId}`);
             });
 
             Promise.all(promises)
