@@ -2,12 +2,12 @@ import axios from 'axios';
 import router from '../../router/index';
 
 const refreshInstance = axios.create({
-    baseURL: `http://13.215.224.254:8080`,
+    baseURL: `http://13.214.35.243:8080`,
     timeout: 30000
 });
 // 타임아웃 30초
 axios.defaults.timeout = 30000;
-axios.defaults.baseURL = `http://13.215.224.254:8080`; // 기본 URL 설정
+axios.defaults.baseURL = `http://13.214.35.243:8080`; // 기본 URL 설정(서버)
 
 axios.interceptors.request.use(config => {
     // 토큰을 가져와서 Authorization 헤더에 추가
