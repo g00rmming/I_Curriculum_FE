@@ -13,8 +13,8 @@
           <h2 class="h3 text-center mb-4">로그인 후 사용하세요</h2>
           <form action="./" method="get" autocomplete="off" novalidate>
             <div class="mb-3">
-              <label class="form-label">아이디( ID or Email)</label>
-              <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off"
+              <label class="form-label">아이디(ID)</label>
+              <input type="email" class="form-control" placeholder="your Id" autocomplete="off"
                 v-model="loginInfo.email" />
             </div>
             <div class="mb-2">
@@ -25,10 +25,10 @@
                   </span> -->
               </label>
               <div class="input-group input-group-flat">
-                <input type="password" class="form-control" placeholder="Your password" autocomplete="off"
+                <input :type="passwordFieldType" class="form-control" placeholder="Your password" autocomplete="off"
                   v-model="loginInfo.password" />
                 <span class="input-group-text">
-                  <a href="#" class="link-secondary" title="Show password"
+                  <a href="#" @click="showPassword" class="link-secondary" title="Show password"
                     data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                       stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -69,12 +69,22 @@ export default {
         email: '',
         password: ''
       },
+      passwordFieldType: 'password'
     };
   },
   mounted: function () {
-
+          localStorage.removeItem("authorization");
+          localStorage.removeItem("isAuthenticated");
+          localStorage.removeItem("memberId");
+          localStorage.removeItem("nickname");
+          localStorage.removeItem("department_name");
   },
   methods: {
+    showPassword() {
+      console.log("누르기전 = ", this.passwordFieldType);
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+      console.log("누른후 = ", this.passwordFieldType);
+    },
     userValidation() {
       // 로그인 검증 로직 추가
       if (this.loginInfo.email && this.loginInfo.password) {
@@ -101,17 +111,28 @@ export default {
           console.log(localStorage, "#########################################localstroage 검사입니다#########################################3")
           console.log(this.$store, "#########################################store 검사입니다!!#########################################");
 
-          this.$axios.get(`${this.apiurl}/my-info/${res.data.memberId}`)
-          .then((res)=>{
-              console.log(res,"test")            
-          })
+
+          // this.$cookies.set('test', this.headers.);
+          // const cookie = this.$cookies.get('test');
+          // console.log(cookie,'seok'); //testValue
+
+          // 멤버 정보를 가져오기
+          this.$axios.get(`/v1/members/my-info/${res.data.memberId}`, {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `${res.headers.authorization}`,
+          }).then((res1) => {
+              console.log(res1, "test")
+              localStorage.setItem("nickname", res1.data.result.nickname);
+              localStorage.setItem("department_name", res1.data.result.department_name);
           this.$router.push({ name: 'dashboard' });
         })
-          .catch((err) => {
-            console.log(err);
+        })
+          .catch(() => {
+            this.$swal('아이디 및 비밀번호를 확인하세요.', '', 'warning');
           })
       } else {
-        alert('Please enter your username and password');
+        this.$swal('아이디 및 비밀번호를 입력하세요.', '', 'warning');
       }
     }
   },
